@@ -85,5 +85,7 @@ class RegisterController extends Controller
             'UserAccount_Status' => $data['UserAccount_Status'],
             'User_Id' => $user->id
         ]);
+
+        //fix login after registration
     }
 }

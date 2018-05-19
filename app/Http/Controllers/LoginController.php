@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     public function login(Request $request){
+        //validates email and password
         if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password])){
-            Auth::user()->UserAccount_Email;
+            Auth::user();
             UserAccount::where('UserAccount_Email', $request->UserAccount_Email)->first();
             Session::save();
             return redirect()->route('home');
@@ -22,6 +23,7 @@ class LoginController extends Controller
         }
     }
 
+    //need to be fix
     public function logout(Request $request){
         Auth::logout();
         $request->session()->flush();
