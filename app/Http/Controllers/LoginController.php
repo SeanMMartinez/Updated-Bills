@@ -11,23 +11,27 @@ use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     public function login(Request $request){
+
         //validates email and password
-        if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password])){
+        if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password, 'UserAccount_Status' => 1])){
             Auth::user();
             UserAccount::where('UserAccount_Email', $request->UserAccount_Email)->first();
+
+            //saves the session
             Session::save();
+
+            //redirect to page
             return redirect()->route('home');
         }
         else{
-            return response()->json(['error' => 'Unauthorized'], 400);
+            return redirect()->route('login');
         }
     }
 
-    //need to be fix
     public function logout(Request $request){
         Auth::logout();
         $request->session()->flush();
         $request->session()->regenerate();
-        return redirect()->route('/');
+        return redirect()->route('home');
     }
 }

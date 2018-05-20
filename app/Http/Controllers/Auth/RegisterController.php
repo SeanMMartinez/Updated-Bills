@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\UserAccount;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -79,13 +80,14 @@ class RegisterController extends Controller
             'User_LandlineNo' => $data['User_LandlineNo'],
         ]);
 
-        UserAccount::create([
+        $userAccount = UserAccount::create([
             'UserAccount_Email' => $data['UserAccount_Email'],
             'password' => Hash::make($data['password']),
             'UserAccount_Status' => $data['UserAccount_Status'],
-            'User_Id' => $user->id
+            'User_Id' => $user->id,
+            'UserAccount_DateCreated' => Carbon::now()->toDateTimeString()
         ]);
 
-        //fix login after registration
+        Auth::user($userAccount);
     }
 }

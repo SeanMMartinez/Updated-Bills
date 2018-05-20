@@ -8,17 +8,22 @@
 
 namespace App\Http\Controllers\API;
 
-use App\User;
+use App\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginApiController
 {
     public function login(Request $request){
-        if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password])){
+
+        //instantiate the UserAccount model
+        $userAccount = new UserAccount();
+
+        if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password, 'Role_Id' => 1, 'UserAccount_Status' => 1])){
+            $user = Auth::user($userAccount);
 
             //fix - get other attributes of the user
-            return response()->json(['response' => 'Authorized'], 200);
+            return response()->json(['firstName' => $user->User_FirstName, 'response' => 'Authorized'], 200);
         }
         else{
             return response()->json(['error' => 'Unauthorized'], 400);
