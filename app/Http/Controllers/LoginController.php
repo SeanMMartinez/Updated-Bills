@@ -24,14 +24,18 @@ class LoginController extends Controller
             return redirect()->route('home');
         }
         else{
+            //redirect back to login page
             return redirect()->route('login');
         }
     }
 
     public function logout(Request $request){
+        //logout the user
         Auth::logout();
         $request->session()->flush();
         $request->session()->regenerate();
-        return redirect()->route('home');
+
+        //redirect back to login page
+        return redirect()->route('login');
     }
 }

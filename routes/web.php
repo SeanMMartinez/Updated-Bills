@@ -17,12 +17,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//route for login
 Route::post('/login', ['uses' => 'LoginController@login', 'as' => 'login']);
 
+//if user is logged in, show homepage
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', function(){
         return view ('home');
     })->name('home');
 });
 
+//route for logout
 Route::post('/logout', 'LoginController@logout')->name('logout');

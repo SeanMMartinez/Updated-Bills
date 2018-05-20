@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Address;
 use App\User;
 use App\UserAccount;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -65,7 +65,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $address = Address::create([
+            'Address_HomeAdd' => $data['Address_HomeAdd'],
+            'Address_City' => $data['Address_City'],
+            'Address_Province' => $data['Address_Province'],
+            'Address_ZipCode' => $data['Address_ZipCode']
+        ]);
+
         $user = User::create([
+            'Address_Id' => $address->Address_Id,
             'User_FirstName' => $data['User_FirstName'],
             'User_MiddleName' => $data['User_MiddleName'],
             'User_LastName' => $data['User_LastName'],
@@ -84,10 +92,10 @@ class RegisterController extends Controller
             'UserAccount_Email' => $data['UserAccount_Email'],
             'password' => Hash::make($data['password']),
             'UserAccount_Status' => $data['UserAccount_Status'],
-            'User_Id' => $user->id,
+            'User_Id' => $user->User_Id,
             'UserAccount_DateCreated' => Carbon::now()->toDateTimeString()
         ]);
 
-        //fix login after registration
+        return redirect()->route('login');
     }
 }

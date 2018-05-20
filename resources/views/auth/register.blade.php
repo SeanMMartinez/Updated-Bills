@@ -180,6 +180,62 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Home Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control{{ $errors->has('Address_HomeAdd') ? ' is-invalid' : '' }}" name="Address_HomeAdd" value="{{ old('Address_HomeAdd') }}" required autofocus>
+
+                                @if ($errors->has('Address_HomeAdd'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('Address_HomeAdd') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control{{ $errors->has('Address_City') ? ' is-invalid' : '' }}" name="Address_City" value="{{ old('Address_City') }}" required autofocus>
+
+                                @if ($errors->has('Address_City'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('Address_City') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control{{ $errors->has('Address_Province') ? ' is-invalid' : '' }}" name="Address_Province" value="{{ old('Address_Province') }}" required autofocus>
+
+                                @if ($errors->has('Address_Province'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('Address_Province') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Zip Code') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control{{ $errors->has('Address_ZipCode') ? ' is-invalid' : '' }}" name="Address_ZipCode" value="{{ old('Address_ZipCode') }}" required autofocus>
+
+                                @if ($errors->has('Address_ZipCode'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('Address_ZipCode') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">

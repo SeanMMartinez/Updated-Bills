@@ -23,7 +23,7 @@ class LoginApiController
             $user = User::with('getUser')->get();
 
             //Return json
-            return response()->json(['response' => 'Authorized', 'user_details' => $user, 'email' => $userAccount->UserAccount_Email], 200);
+            return response()->json(['response' => 'Authorized', 'data' => ['user_details' => $user, 'email' => $userAccount->UserAccount_Email]], 200);
         }
         else{
             return response()->json(['error' => 'Unauthorized'], 400);
