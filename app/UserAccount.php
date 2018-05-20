@@ -21,4 +21,9 @@ class UserAccount extends Authenticatable
     //fields of the table
     protected $fillable = ['UserAccount_Id','UserAccount_Email', 'password', 'UserAccount_PasswordRecover',
         'UserAccount_Status', 'Role_Id', 'User_Id', 'UserAccount_DateCreated'];
+
+    //Set relationship
+    public function getUserAccount(){
+        return $this->hasOne("App\User", "User_Id");
+    }
 }

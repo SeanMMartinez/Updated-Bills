@@ -80,7 +80,7 @@ class RegisterController extends Controller
             'User_LandlineNo' => $data['User_LandlineNo'],
         ]);
 
-        $userAccount = UserAccount::create([
+        UserAccount::create([
             'UserAccount_Email' => $data['UserAccount_Email'],
             'password' => Hash::make($data['password']),
             'UserAccount_Status' => $data['UserAccount_Status'],
@@ -88,6 +88,6 @@ class RegisterController extends Controller
             'UserAccount_DateCreated' => Carbon::now()->toDateTimeString()
         ]);
 
-        Auth::user($userAccount);
+        //fix login after registration
     }
 }
