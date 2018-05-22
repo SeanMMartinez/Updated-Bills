@@ -29,3 +29,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 //route for logout
 Route::post('/logout', 'LoginController@logout')->name('logout');
+
+//routes for announcement
+Route::resource('/announcements', 'AnnouncementController');
+
+

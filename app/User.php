@@ -6,9 +6,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    //middleware guard name
-    protected $guard = 'user';
-
     //disables the timestamp
     public $timestamps = false;
 
@@ -28,5 +25,9 @@ class User extends Authenticatable
     //Set relationship
     public function getUser(){
         return $this->belongsTo("App\UserAccount", "User_Id");
+    }
+
+    public function getAnnouncement(){
+        return $this->hasMany('App\Announcement', 'User_Id');
     }
 }
