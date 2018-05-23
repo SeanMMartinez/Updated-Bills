@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Announcement;
+use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -10,7 +11,7 @@ class AnnouncementController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth');
     }
 
     /**

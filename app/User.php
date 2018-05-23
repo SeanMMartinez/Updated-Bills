@@ -23,11 +23,11 @@ class User extends Authenticatable
     ];
 
     //Set relationship
-    public function getUser(){
+    public function userAccount(){
         return $this->belongsTo("App\UserAccount", "User_Id");
     }
 
-    public function getAnnouncement(){
+    public function announcement(){
         return $this->hasMany('App\Announcement', 'User_Id');
     }
 }

@@ -20,7 +20,7 @@ class LoginApiController
             $userAccount = Auth::user();
 
             //Get the user details
-            $user = User::with('getUser')->get();
+            $user = User::with('userAccount')->where('User_Id', auth()->user()->User_Id)->first();
 
             //Return json
             return response()->json(['response' => 'Authorized', 'data' => $user, 'email' => $userAccount->UserAccount_Email], 200);

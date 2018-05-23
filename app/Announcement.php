@@ -20,7 +20,7 @@ class Announcement extends Model
         'Announcement_Id', 'Announcement_Title', 'User_Id', 'Announcement_Text', 'Announcement_DateTime_Created'
     ];
 
-    public function addUser(){
-        return $this->hasOne('App\User', 'User_Id');
+    public function user(){
+        return $this->belongsTo('App\User', 'User_Id');
     }
 }

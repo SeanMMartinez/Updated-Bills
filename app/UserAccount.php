@@ -23,7 +23,7 @@ class UserAccount extends Authenticatable
         'UserAccount_Status', 'Role_Id', 'User_Id', 'UserAccount_DateCreated'];
 
     //Set relationship
-    public function getUserAccount(){
+    public function user(){
         return $this->hasOne("App\User", "User_Id");
     }
 }
