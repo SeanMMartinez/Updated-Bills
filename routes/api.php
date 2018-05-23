@@ -21,3 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', 'API\LoginApiController@login');
 
 //Announcement API
+//get all the list
+Route::get('/announcements', 'API\AnnouncementApiController@index');
+
+//show selected announcement
+Route::get('announcements/{announcement}', 'API\AnnouncementApiController@show');
