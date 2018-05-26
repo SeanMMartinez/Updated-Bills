@@ -66,39 +66,4 @@ class AnnouncementController extends Controller
         $announcement = Announcement::find($id);
         return view('announcements.show')->with('announcement', $announcement);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $announcement = Announcement::find($id);
-        $announcement->Announcement_Title = $request->input('Announcement_Title');
-        $announcement->User_Id = auth()->user()->id;
-        $announcement->Announcement_Text = $request->input('Announcement_Text');
-        $announcement->Announcement_DateTime_Created = $request->input('Announcement_DateTime_Created');
-        $announcement->save();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $announcement = Announcement::find($id);
-        // Check for correct user
-        if(auth()->user()->id !==$announcement->User_Id){
-            return redirect('/announcements')->with('error', 'Unauthorized Page');
-        }
-
-        $announcement->delete();
-        return redirect('/announcements')->with('success', 'Post Removed');
-    }
 }

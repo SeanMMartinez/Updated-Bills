@@ -25,12 +25,20 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', function(){
         return view ('home');
     })->name('home');
-});
 
-//route for logout
-Route::post('/logout', 'LoginController@logout')->name('logout');
+    //route for logout
+    Route::post('/logout', 'LoginController@logout')->name('logout');
+});
 
 //routes for announcement
 Route::resource('/announcements', 'AnnouncementController');
+
+//only administrator can access
+Route::middleware('role:administrator')->group(function (){
+    Route::resource('users', 'UserController');
+});
+
+
+
 
 

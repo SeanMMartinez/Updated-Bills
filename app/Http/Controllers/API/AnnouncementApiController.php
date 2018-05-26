@@ -9,18 +9,25 @@
 namespace App\Http\Controllers\API;
 
 use App\Announcement;
+use App\UserAccount;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class AnnouncementApiController
+
+class AnnouncementApiController extends Controller
 {
     public function index()
     {
-        $announcements = Announcement::all();
+        if(UserAccount::where('UserAccount_Id', Auth::guard('api')->id())->get()){
+            return response()->json(Announcement::all());
+        }
 
-        return $announcements;
     }
 
-    public function show(Announcement $announcement)
+    public function show($id)
     {
-        return $announcement;
+        if(UserAccount::where('UserAccount_Id', Auth::guard('api')->id())->get()){
+            return response()->json(Announcement::findOrFail($id));
+        }
     }
 }

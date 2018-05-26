@@ -19,4 +19,8 @@ class Address extends Model
     protected $fillable = [
         'Address_Id', 'Address_HomeAdd', 'Address_City', 'Address_Province', 'Address_ZipCode'
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User', 'Address_Id');
+    }
 }

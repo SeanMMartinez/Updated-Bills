@@ -93,6 +93,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'UserAccount_Status' => $data['UserAccount_Status'],
             'User_Id' => $user->User_Id,
+            'api_token' => str_random(60),
             'UserAccount_DateCreated' => Carbon::now()->toDateTimeString()
         ]);
 

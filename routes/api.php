@@ -20,9 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Login API
 Route::post('/login', 'API\LoginApiController@login');
 
-//Announcement API
-//get all the list
-Route::get('/announcements', 'API\AnnouncementApiController@index');
 
-//show selected announcement
-Route::get('announcements/{announcement}', 'API\AnnouncementApiController@show');
+Route::group(['middleware' => 'auth:api'], function (){
+    //Announcement API
+    //get all the list
+    Route::get('/announcements', 'API\AnnouncementApiController@index');
+    //show selected announcement
+    Route::get('announcements/{announcement}', 'API\AnnouncementApiController@show');
+});

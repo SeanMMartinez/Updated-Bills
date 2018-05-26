@@ -8,11 +8,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginApiController
+class LoginApiController extends Controller
 {
     public function login(Request $request){
 
@@ -23,10 +24,11 @@ class LoginApiController
             $user = User::with('userAccount')->where('User_Id', auth()->user()->User_Id)->first();
 
             //Return json
-            return response()->json(['response' => 'Authorized', 'data' => $user, 'email' => $userAccount->UserAccount_Email], 200);
+            return response()->json(['response' => 'Authorized', 'useraccount_id' => $userAccount->UserAccount_Id, 'data' => $user, 'email' => $userAccount->UserAccount_Email,
+                'api_token' => $userAccount->api_token], 200);
         }
         else{
-            return response()->json(['error' => 'Unauthorized'], 400);
+            return response()->json(['response' => 'Unauthorized'], 200);
         }
     }
 }
