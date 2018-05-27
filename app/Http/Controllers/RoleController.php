@@ -46,10 +46,10 @@ class RoleController extends Controller
         $role->save();
 
         if ($request->permissions) {
-            $role->syncPermissions(explode(',', $request->permissions));
+            $role->syncPermissions($request->permissions);
         }
 
-        return redirect()->route('roles.show', $id);
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -93,7 +93,7 @@ class RoleController extends Controller
         $role->save();
 
         if ($request->permissions) {
-            $role->syncPermissions(explode(',', $request->permissions));
+            $role->syncPermissions($request->permissions);
         }
 
         return redirect()->route('roles.show', $id);

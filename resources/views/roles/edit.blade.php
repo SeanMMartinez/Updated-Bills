@@ -10,7 +10,7 @@
 
                         <form method="POST" action="{{ route('roles.update', $role->Role_Id) }}">
                             @csrf
-
+                            {{ method_field('PUT') }}
                             <div class="form-group">
                                 <label for="Announcement_Title">Role Name</label>
                                 <input type="text" name="name" value="{{ $role->name }}" class="form-control">
@@ -24,7 +24,8 @@
                             <h2 class="title">Permissions:</h2>
                             @foreach ($permissions as $permission)
                                 <div class="field">
-                                    <input type="checkbox" name="permissions[]" value="{{$permission->Permission_Id}}">{{$permission->Permission_Name}}<br>
+                                    <input type="checkbox" name="permissions[]" value="{{$permission->Permission_Id}}"
+                                    @if ($role->permissions->contains($permission->Permission_Id)) checked='checked' @endif>{{$permission->Permission_Name}}<br>
                                 </div>
                             @endforeach
                             <button class="button is-primary">Save Changes to Role</button>
