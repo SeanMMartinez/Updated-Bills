@@ -33,7 +33,8 @@
                         <td>{{$userAccount->user->User_FirstName}}</td>
                         <td>{{$userAccount->user->User_LastName}}</td>
                         <td>{{$userAccount->UserAccount_DateCreated}}</td>
-                        <td class="has-text-right"><a class="button is-outlined m-r-5" href="{{route('users.show', $userAccount->UserAccount_Id)}}">View</a></td>
+                        <td class="has-text-right"><a class="button is-outlined m-r-5" href="{{route('users.show', $userAccount->UserAccount_Id)}}">View</a>
+                            <a class="button is-light" href="{{route('users.edit', $userAccount->UserAccount_Id)}}">Edit</a></td>
                     </tr>
                 @endforeach
                 </tbody>

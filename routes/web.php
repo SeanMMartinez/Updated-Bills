@@ -35,7 +35,8 @@ Route::resource('/announcements', 'AnnouncementController');
 
 //only administrator can access
 Route::middleware('role:administrator')->group(function (){
-    Route::resource('users', 'UserController');
+    Route::resource('users', 'UserController', ['except' => 'destroy']);
+    Route::resource('roles', 'RoleController', ['except' => 'destroy']);
 });
 
 

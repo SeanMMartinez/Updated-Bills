@@ -11,6 +11,10 @@
                     <p><b>Created by:</b> {{$announcement->user->User_FirstName.' '.$announcement->user->User_LastName}}</p>
                     </br>
                 </div>
+                <div class="column">
+                    <a href="{{route('announcements.show', $announcement->Announcement_Id)}}" class="button is-primary is-pulled-right">
+                        <i class="fa fa-user m-r-10"></i>View Details</a>
+                </div>
             @endforeach
         @else <p>No Announcement found</p>
         @endif

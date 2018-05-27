@@ -8,7 +8,7 @@
             </div> <!-- end of column -->
 
             <div class="column">
-                {{--<a href="{{route('users.edit', $user->id)}}" class="button is-primary is-pulled-right"><i class="fa fa-user m-r-10"></i> Edit User</a>--}}
+                <a href="{{route('users.edit', $userAccount->UserAccount_Id)}}" class="button is-primary is-pulled-right"><i class="fa fa-user m-r-10"></i> Edit User</a>
             </div>
         </div>
         <hr class="m-t-0">
@@ -30,13 +30,13 @@
                 <div class="field">
                     <div class="field">
                         <label for="email" class="label">Roles</label>
-{{--                        <ul>
+                        <ul>
                             @forelse ($userAccount->roles as $role)
-                                <li>{{$role->display_name}} ({{$role->description}})</li>
+                                <li>{{$role->name}} ({{$role->Role_Description}})</li>
                             @empty
                                 <p>This user has not been assigned any roles yet</p>
                             @endforelse
-                        </ul>--}}
+                        </ul>
                     </div>
                 </div>
             </div>
