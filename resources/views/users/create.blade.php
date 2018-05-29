@@ -272,10 +272,8 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
-
                                 <div class="col-md-6">
-                                    <input id="name" type="number" class="form-control{{ $errors->has('UserAccount_Status') ? ' is-invalid' : '' }}" name="UserAccount_Status" value="{{ old('UserAccount_Status') }}" required autofocus>
+                                    <input id="name" type="hidden" class="form-control{{ $errors->has('UserAccount_Status') ? ' is-invalid' : '' }}" name="UserAccount_Status" value="{{ old('UserAccount_Status') }}" required autofocus>
 
                                     @if ($errors->has('UserAccount_Status'))
                                         <span class="invalid-feedback">
@@ -284,6 +282,13 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <h2 class="title">Roles:</h2>
+                            @foreach ($roles as $role)
+                                <div class="field">
+                                    <input type="checkbox" name="roles[]" value="{{$role->Role_Id}}">{{$role->name}}<br>
+                                </div>
+                            @endforeach
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">

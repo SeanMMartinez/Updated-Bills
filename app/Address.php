@@ -21,6 +21,6 @@ class Address extends Model
     ];
 
     public function user(){
-        return $this->belongsTo('App\User', 'Address_Id');
+        return $this->hasOne('App\User', 'Address_Id');
     }
 }

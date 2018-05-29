@@ -12,5 +12,7 @@ class Role extends LaratrustRole
         'Role_Id', 'name', 'Role_Description', 'Role_DateCreated'
     ];
 
+    protected $table = 'roles';
+
     public $timestamps = false;
 }

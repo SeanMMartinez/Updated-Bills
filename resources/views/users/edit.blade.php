@@ -10,6 +10,7 @@
 
                         <form method="POST" action="{{ route('users.update', $userAccount->UserAccount_Id) }}">
                             @csrf
+                            {{ method_field('PUT') }}
 
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
@@ -183,7 +184,7 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Home Address') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control{{ $errors->has('Address_HomeAdd') ? ' is-invalid' : '' }}" name="Address_HomeAdd" value="{{ old('Address_HomeAdd') }}"  autofocus>
+                                    <input id="name" type="text" class="form-control{{ $errors->has('Address_HomeAdd') ? ' is-invalid' : '' }}" name="Address_HomeAdd" value="{{ $address->Address_HomeAdd }}"  autofocus>
                                     @if ($errors->has('Address_HomeAdd'))
                                         <span class="invalid-feedback">
                                         <strong>{{ $errors->first('Address_HomeAdd') }}</strong>
@@ -196,7 +197,7 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control{{ $errors->has('Address_City') ? ' is-invalid' : '' }}" name="Address_City" value="{{ old('Address_City') }}"  autofocus>
+                                    <input id="name" type="text" class="form-control{{ $errors->has('Address_City') ? ' is-invalid' : '' }}" name="Address_City" value="{{ $address->Address_City  }}"  autofocus>
 
                                     @if ($errors->has('Address_City'))
                                         <span class="invalid-feedback">
@@ -210,7 +211,7 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control{{ $errors->has('Address_Province') ? ' is-invalid' : '' }}" name="Address_Province" value="{{ old('Address_Province') }}"  autofocus>
+                                    <input id="name" type="text" class="form-control{{ $errors->has('Address_Province') ? ' is-invalid' : '' }}" name="Address_Province" value="{{ $address->Address_Province  }}"  autofocus>
 
                                     @if ($errors->has('Address_Province'))
                                         <span class="invalid-feedback">
@@ -224,7 +225,7 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Zip Code') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control{{ $errors->has('Address_ZipCode') ? ' is-invalid' : '' }}" name="Address_ZipCode" value="{{ old('Address_ZipCode') }}"  autofocus>
+                                    <input id="name" type="text" class="form-control{{ $errors->has('Address_ZipCode') ? ' is-invalid' : '' }}" name="Address_ZipCode" value="{{ $address->Address_ZipCode  }}"  autofocus>
 
                                     @if ($errors->has('Address_ZipCode'))
                                         <span class="invalid-feedback">
@@ -261,6 +262,14 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <h2 class="title">Roles:</h2>
+                            @foreach ($roles as $role)
+                                <div class="field">
+                                    <input type="checkbox" name="roles[]" value="{{$role->Role_Id}}"
+                                           @if ($userAccount->roles->contains($role->Role_Id)) checked='checked' @endif>{{$role->name}}<br>
+                                </div>
+                            @endforeach
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">

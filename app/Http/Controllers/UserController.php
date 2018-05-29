@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Address;
 use App\UserAccount;
 use App\User;
+use App\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create')->with('roles', $roles);
     }
 
     /**
@@ -66,11 +68,13 @@ class UserController extends Controller
         $userAccount = new UserAccount();
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
         $userAccount->password = Hash::make($request->input('password'));
-        $userAccount->UserAccount_Status = $request->input('UserAccount_Status');
+        $userAccount->UserAccount_Status = 1;
         $userAccount->User_Id = $user->User_Id;
         $userAccount->api_token = str_random(60);
         $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();
         $userAccount->save();
+
+        return view("users.show")->with('userAccount', $userAccount);
     }
 
     /**
@@ -81,7 +85,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $userAccount = UserAccount::findOrFail($id);
+        $userAccount = UserAccount::where('UserAccount_Id', $id)->with('roles')->first();
         return view("users.show")->with('userAccount', $userAccount);
     }
 
@@ -93,8 +97,19 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $userAccount = UserAccount::findOrFail($id);
-        return view("users.edit")->withUserAccount($userAccount);
+        $userAccount = UserAccount::where('UserAccount_Id', $id)->with('roles')->first();
+
+        //get user Id
+        $userId = $userAccount->User_Id;
+        $user = User::where('User_Id', $userId)->first();
+
+        //get address Id
+        $addressId = $user->Address_Id;
+        $address = Address::where('Address_Id', $addressId)->first();
+
+        $roles = Role::all();
+
+        return view("users.edit")->withUserAccount($userAccount)->withAddress($address)->with('roles', $roles);
     }
 
     /**
@@ -106,6 +121,40 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //to be continued
+        $userAccount = UserAccount::findOrFail($id);
+        $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
+        $userAccount->password = Hash::make($request->input('password'));
+        $userAccount->UserAccount_Status = $request->input('UserAccount_Status');
+        $userAccount->api_token = str_random(60);
+        $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();
+        $userAccount->save();
+
+        $user = User::findOrFail($userAccount->User_Id);
+        $user->User_FirstName = $request->input('User_FirstName');
+        $user->User_MiddleName = $request->input('User_MiddleName');
+        $user->User_LastName = $request->input('User_LastName');
+        $user->User_Picture = $request->input('User_Picture');
+        $user->User_Nationality = $request->input('User_Nationality');
+        $user->User_Birthdate = $request->input('User_Birthdate');
+        $user->User_Age = $request->input('User_Age');
+        $user->User_Religion = $request->input('User_Religion');
+        $user->User_Gender = $request->input('User_Gender');
+        $user->User_CivilStatus = $request->input('User_CivilStatus');
+        $user->User_CellphoneNo = $request->input('User_CellphoneNo');
+        $user->User_LandlineNo = $request->input('User_LandlineNo');
+        $user->save();
+
+        $address = Address::findOrFail($user->Address_Id);
+        $address->Address_HomeAdd = $request->input('Address_HomeAdd');
+        $address->Address_City = $request->input('Address_City');
+        $address->Address_Province = $request->input('Address_Province');
+        $address->Address_ZipCode = $request->input('Address_ZipCode');
+        $address->save();
+
+        $userAccount->syncRoles($request->roles);
+
+
+        return redirect()->route('users.show', $id);
+
     }
 }
