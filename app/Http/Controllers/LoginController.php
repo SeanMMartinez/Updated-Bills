@@ -13,7 +13,7 @@ class LoginController extends Controller
     public function login(Request $request){
 
         //validates email and password
-        if(Auth::attempt(['UserAccount_Email' => ($request->UserAccount_Email), 'password' => ($request->password), 'UserAccount_Status' => 1])) {
+        if(Auth::attempt(['UserAccount_Email' => ($request->UserAccount_Email), 'password' => ($request->password)])) {
             Auth::user();
 
             //saves the session
