@@ -21,7 +21,7 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::orderBy('Announcement_DateTime_Created')->paginate(10);
+        $announcements = Announcement::orderBy('Announcement_DateTime_Created', 'DESC')->paginate(10);
         return view('announcements.index')->with('announcements', $announcements);
     }
 

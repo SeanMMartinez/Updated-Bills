@@ -253,8 +253,8 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="number" class="form-control{{ $errors->has('UserAccount_Status') ? ' is-invalid' : '' }}" name="UserAccount_Status" value="{{ $userAccount->UserAccount_Status }}"  autofocus>
-
+                                    {{--<input id="name" type="number" class="form-control{{ $errors->has('UserAccount_Status') ? ' is-invalid' : '' }}" name="UserAccount_Status" value="{{ $userAccount->UserAccount_Status }}"  autofocus>--}}
+                                    <input type="checkbox" name="UserAccount_Status" value="{{ $userAccount->UserAccount_Status }}" @if ($userAccount->UserAccount_Status == 1) checked='checked' @endif > Active<br>
                                     @if ($errors->has('UserAccount_Status'))
                                         <span class="invalid-feedback">
                                         <strong>{{ $errors->first('UserAccount_Status') }}</strong>

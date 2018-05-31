@@ -30,13 +30,6 @@
                     </div>
                 </div>
 
-                <div class="field">
-                    <div class="field">
-                        <label for="email" class="label">Date Created</label>
-                        <pre>{{$announcement->user->User_FirstName.' '.$announcement->user->User_LastName}}</pre>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
