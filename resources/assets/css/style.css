@@ -1,0 +1,45 @@
+/* Required height of parents of the Half Page Carousel for proper displaying carousel itself */
+html,
+body,
+.view {
+  height: 100%; }
+
+/* Half Page Carousel itself*/
+.carousel {
+  height: 50%; }
+  .carousel .carousel-inner {
+    height: 100%; }
+    .carousel .carousel-inner .carousel-item,
+    .carousel .carousel-inner .active {
+      height: 100%; }
+
+/* Adjustment for mobile devices*/
+@media (max-width: 776px) {
+  .carousel {
+    height: 100%; } }
+
+/* Footer color for sake of consistency with Navbar */
+.page-footer {
+  background-color: #929FBA; }
+
+.basic-textarea textarea {
+    height: auto;
+}
+
+.card.chat-room .friend-list li {
+  border-bottom: 1px solid #e0e0e0; }
+  .card.chat-room .friend-list li:last-of-type {
+    border-bottom: none; }
+
+.card.chat-room img.rounded-circle {
+  border-radius: 50%; }
+
+.card.chat-room img.avatar {
+  height: 3rem;
+  width: 3rem; }
+
+.card.chat-room .text-small {
+  font-size: 0.95rem; }
+
+.card.chat-room .text-smaller {
+  font-size: 0.75rem; }
