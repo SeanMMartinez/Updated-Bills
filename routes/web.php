@@ -11,24 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
+
+//route for show login form
+Route::get('/', 'LoginController@showLoginForm');
 
 //route for login
 Route::post('/login', ['uses' => 'LoginController@login', 'as' => 'login']);
 
 //if user is logged in, show homepage
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('/home', function(){
-        return view ('home');
-    })->name('home');
-
-    //route for logout
-    Route::post('/logout', 'LoginController@logout')->name('logout');
+    Route::get('/announcements', function(){
+        return view ('announcements.index');
+    })->name('announcements');
 });
+
+//route for logout
+Route::post('/logout', ['uses' => 'LoginController@logout', 'as' => 'logout']);
 
 //routes for announcement
 Route::resource('/announcements', 'AnnouncementController');
