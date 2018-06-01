@@ -13,12 +13,12 @@
 
                             <div class="form-group">
                                 <label for="name">Role Name</label>
-                                <input type="text" name="name" value="{{ old('name') }}"  class="form-control"></input>
+                                <input type="text" name="name" value="{{ old('name') }}"  class="form-control">
                             </div>
 
                             <div class="form-group">
                                 <label for="Role_Description">Role Description</label>
-                                <input type="text" name="Role_Description" value="{{ old('Role_Description') }}"  class="form-control"></input>
+                                <input type="text" name="Role_Description" value="{{ old('Role_Description') }}"  class="form-control">
                             </div>
 
                             <h2 class="title">Permissions:</h2>

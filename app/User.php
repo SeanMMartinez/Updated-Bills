@@ -32,6 +32,6 @@ class User extends Authenticatable
     }
 
     public function address(){
-        return $this->hasMany('App\Address', 'Address_Id');
+        return $this->hasOne('App\Address', 'Address_Id');
     }
 }

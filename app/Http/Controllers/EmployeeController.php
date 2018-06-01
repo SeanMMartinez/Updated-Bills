@@ -19,12 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //$userAccounts = UserAccount::orderBy('UserAccount_Id')->paginate(10);
-
-        if($userAccounts = UserAccount::orderBy('UserAccount_Id')->whereRoleIs('Tenant')->get()){
-            return view('users.index')->with('userAccounts', $userAccounts);
-        }
-        //return view('users.index')->with('userAccounts', $userAccounts);
+        $userAccounts = UserAccount::orderBy('UserAccount_Id')->paginate(10);
+        return view('employees.index')->with('userAccounts', $userAccounts);
     }
 
     /**
@@ -35,7 +31,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('users.create')->with('roles', $roles);
+        return view('employees.create')->with('roles', $roles);
     }
 
     /**
@@ -78,7 +74,7 @@ class UserController extends Controller
         $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();
         $userAccount->save();
 
-        return view("users.show")->with('userAccount', $userAccount);
+        return view("employees.show")->with('userAccount', $userAccount);
     }
 
     /**
@@ -90,7 +86,7 @@ class UserController extends Controller
     public function show($id)
     {
         $userAccount = UserAccount::where('UserAccount_Id', $id)->with('roles')->first();
-        return view("users.show")->with('userAccount', $userAccount);
+        return view("employees.show")->with('userAccount', $userAccount);
     }
 
     /**
@@ -113,7 +109,7 @@ class UserController extends Controller
 
         $roles = Role::all();
 
-        return view("users.edit")->withUserAccount($userAccount)->withAddress($address)->with('roles', $roles);
+        return view("employees.edit")->withUserAccount($userAccount)->withAddress($address)->with('roles', $roles);
     }
 
     /**
@@ -158,7 +154,7 @@ class UserController extends Controller
         $userAccount->syncRoles($request->roles);
 
 
-        return redirect()->route('users.show', $id);
+        return redirect()->route('employees.show', $id);
 
     }
 }

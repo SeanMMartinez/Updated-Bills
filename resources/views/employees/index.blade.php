@@ -3,10 +3,10 @@
     <div class="flex-container">
         <div class="columns m-t-10">
             <div class="column">
-                <h1 class="title">Manage Users</h1>
+                <h1 class="title">Manage Employees</h1>
             </div>
             <div class="column">
-                <a href="{{route('users.create')}}" class="button is-primary is-pulled-right"><i class="fa fa-user-plus m-r-10"></i> Create New User</a>
+                <a href="{{route('employees.create')}}" class="button is-primary is-pulled-right"><i class="fa fa-user-plus m-r-10"></i> Create New User</a>
             </div>
         </div>
         <hr class="m-t-0">
@@ -33,14 +33,13 @@
                         <td>{{$userAccount->user->User_FirstName}}</td>
                         <td>{{$userAccount->user->User_LastName}}</td>
                         <td>{{$userAccount->UserAccount_DateCreated}}</td>
-                        <td class="has-text-right"><a class="button is-outlined m-r-5" href="{{route('users.show', $userAccount->UserAccount_Id)}}">View</a>
-                            <a class="button is-light" href="{{route('users.edit', $userAccount->UserAccount_Id)}}">Edit</a></td>
+                        <td class="has-text-right"><a class="button is-outlined m-r-5" href="{{route('employees.show', $userAccount->UserAccount_Id)}}">View</a>
+                            <a class="button is-light" href="{{route('employees.edit', $userAccount->UserAccount_Id)}}">Edit</a></td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
     </div> <!-- end of .card -->
-
     </div>
 @endsection
