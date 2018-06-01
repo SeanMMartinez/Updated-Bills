@@ -2,26 +2,28 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>DormPanion</title>
+    <link rel="icon" href="{{asset('img/logo.png')}}"/>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'DormPanion') }}</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{asset('css/mdb.min.css')}}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{asset('css/compiled.min.css')}}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
+<body style="background-color:#64e7d3">
+{{--    <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -50,15 +52,11 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="btn btn-md btn-block btn-info z-depth-2" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
                                 </div>
                             </li>
                         @endguest
@@ -70,6 +68,62 @@
         <main class="py-4">
             @yield('content')
         </main>
-    </div>
+    </div>--}}
+
+@yield('sidenav')
+
+<main class="py-4">
+@yield('content')
+</main>
+
 </body>
+
+<script type="text/javascript" src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{{asset('js/popper.min.js')}}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('js/compiled.min.js')}}"></script>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<script src="{{asset('js/forms.js')}}"></script>
+
+<script type="text/javascript">
+    var onloadCallback = function () {
+        grecaptcha.render('https://www.google.com/recaptcha/api/siteverify', {
+            'sitekey': 'your_site_key'
+        });
+    };
+</script>
+<script>
+    // SideNav Initialization
+    $(".button-collapse").sideNav();
+
+    $(document).ready(function () {
+        $('.mdb-select').material_select();
+    });
+
+    // Data Picker Initialization
+    $('.datepicker').pickadate({
+        min: new Date(1900, 1, 31),
+        max: new Date(2099, 12, 31), selectYears: 5000, closeOnClear: false, closeOnSelect: false
+    });
+
+    // Tooltips Initialization
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    // Time Picker Initialization
+    $('#input_starttime').pickatime({});
+
+    // Time Picker Initialization
+    $('#input_endtime').pickatime({});
+
+    new WOW().init();
+</script>
 </html>

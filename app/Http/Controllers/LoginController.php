@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
     public function login(Request $request){
 
         //validates email and password
@@ -20,7 +30,7 @@ class LoginController extends Controller
             Session::save();
 
             //redirect to page
-            return redirect()->route('home');
+            return redirect()->route('announcements.index');
         }
         else{
             //redirect back to login page

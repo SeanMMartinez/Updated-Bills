@@ -49,9 +49,21 @@
             <li>
                 <ul class="collapsible collapsible-accordion">
                     <li>
-                        <a class="collapsible-header waves-effect arrow-r" href="/announce">
+                        <a class="collapsible-header waves-effect arrow-r" href="{{ route('announcements.index') }}">
                             Announcements
                         </a>
+                    </li>
+                    <li class="keybutton">
+                        <a class="collapsible-header waves-effect arrow-r">
+                            Manage<i class="fa fa-angle-down rotate-icon"></i>
+                        </a>
+                        <div class="collapsible-body"> <ul class="sub-menu">
+                                <li><a class="waves-effect" href="{{ route('users.index') }}">Manage Users</a></li>
+                                <li><a class="waves-effect" href="{{ route('roles.index') }}">Manage Roles</a></li>
+                                <li><a class="waves-effect" href="#">Manage Personnel</a></li>
+                                <li><a class="waves-effect" href="#">Manage Rooms</a></li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="keybutton">
                             <a class="collapsible-header waves-effect arrow-r">
@@ -96,21 +108,21 @@
             </li>
             <!--/. Side navigation links -->
         </ul>
-        <div class="container fixed-bottom">
-            <p style="color: grey">Hi, {{ Auth::user()->UserAccount_Email }}</p>
-            <div class="row">
-                <div class="col-md-3">
-                    <i class="fa fa-user-circle fa-3x"></i>
-                </div>
-                <div class="col-md-9 justify-content-center mt-1">
-                    <div class="text-center mb-3">
-                        <button type="button" class="btn btn-md btn-block btn-info z-depth-2">
-                            Log Out
-                        </button>
+            <div class="container fixed-bottom">
+                <p style="color: grey">Hi, {{ Auth::user()->user->User_FirstName.' '.Auth::user()->user->User_LastName }}</p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <i class="fa fa-user-circle fa-3x"></i>
+                    </div>
+                    <div class="col-md-9 justify-content-center mt-1">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="text-center mb-3">{{ csrf_field() }}
+                            <button type="submit" class="btn btn-md btn-block btn-info z-depth-2">
+                                Log Out
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
     <!--/. Sidebar navigation -->
     <!-- Navbar -->
@@ -120,9 +132,9 @@
             <a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars black-text"></i></a>
         </div>
         <!-- Breadcrumb-->
-{{--        <div class="breadcrumb-dn mr-auto">
-            <p style="font-size: 30px">{{$title}}</p>
-        </div>--}}
+        <div class="breadcrumb-dn mr-auto">
+            <p style="font-size: 30px"></p>
+        </div>
     </nav>
     <!-- /.Navbar -->
 </header>
