@@ -265,9 +265,12 @@
 
                             <h2 class="title">Roles:</h2>
                             @foreach ($roles as $role)
-                                <div class="field">
-                                    <input type="checkbox" name="roles[]" value="{{$role->Role_Id}}"
-                                           @if ($userAccount->roles->contains($role->Role_Id)) checked='checked' @endif>{{$role->name}}<br>
+                                <div class="form-check pb-3">
+                                    <input type="checkbox" class="filled-in form-check-input"
+                                           id="checkbox101" name="roles[]"
+                                           value="{{$role->Role_Id}}"
+                                           @if ($userAccount->roles->contains($role->Role_Id)) checked='checked' @endif>
+                                    <label class="form-check-label" for="checkbox101">{{$role->name}}</label>
                                 </div>
                             @endforeach
 

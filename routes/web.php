@@ -29,15 +29,20 @@ Route::group(['middleware' => 'auth'], function(){
 //route for logout
 Route::post('/logout', ['uses' => 'LoginController@logout', 'as' => 'logout']);
 
-//routes for announcement
-Route::resource('/announcements', 'AnnouncementController');
+
 
 //only administrator can access
 Route::middleware('role:administrator')->group(function (){
     Route::resource('users', 'UserController');
     Route::resource('employees', 'EmployeeController');
     Route::resource('roles', 'RoleController');
+    Route::resource('rooms', 'RoomController');
+    //routes for bills
+    Route::resource('bills','BillController');
 });
+
+//routes for announcement
+Route::resource('announcements', 'AnnouncementController');
 
 
 

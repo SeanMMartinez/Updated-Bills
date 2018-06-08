@@ -9,6 +9,8 @@
 
 @extends('layouts.app')
 
+@section('title', 'Login')
+
 @section('content')
     <section class="intro-2 rgba-gradient">
         <div class="justify-content-center">

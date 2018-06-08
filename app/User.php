@@ -34,4 +34,8 @@ class User extends Authenticatable
     public function address(){
         return $this->hasOne('App\Address', 'Address_Id');
     }
+
+    public function tenantInfo(){
+        return $this->belongsTo('App\TenantInfo', 'User_Id');
+    }
 }

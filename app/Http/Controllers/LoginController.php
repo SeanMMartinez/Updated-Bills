@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Role;
 use App\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,8 +23,9 @@ class LoginController extends Controller
 
     public function login(Request $request){
 
+        $roles = Role::all();
         //validates email and password
-        if(Auth::attempt(['UserAccount_Email' => ($request->UserAccount_Email), 'password' => ($request->password)])) {
+        if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password, 'UserAccount_Status' => 1])) {
             Auth::user();
 
             //saves the session
@@ -32,7 +34,7 @@ class LoginController extends Controller
             //redirect to page
             return redirect()->route('announcements.index');
         }
-        else{
+        else {
             //redirect back to login page
             return redirect()->route('login');
         }

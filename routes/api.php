@@ -27,4 +27,7 @@ Route::group(['middleware' => 'auth:api'], function (){
     Route::get('/announcements', 'API\AnnouncementApiController@index');
     //show selected announcement
     Route::get('announcements/{announcement}', 'API\AnnouncementApiController@show');
+
+    //Bill API
+    Route::get('/bills', 'API\BillApiController@bills');
 });

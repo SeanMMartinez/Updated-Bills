@@ -21,6 +21,9 @@ class AnnouncementApiController extends Controller
         if(UserAccount::where('UserAccount_Id', Auth::guard('api')->id())->get()){
             return response()->json(Announcement::all());
         }
+        else {
+            return response()->json(['response' => 'access denied']);
+        }
 
     }
 

@@ -8,9 +8,10 @@ use App\User;
 use App\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $userAccounts = UserAccount::orderBy('UserAccount_Id')->paginate(10);
-        return view('employees.index')->with('userAccounts', $userAccounts);
+        if($userAccounts = UserAccount::where('UserAccount_Id', '!=', 83)->whereRoleIs('Employee')->get()){
+            return view('employees.index')->with('userAccounts', $userAccounts);
+        }
     }
 
     /**
@@ -74,6 +76,9 @@ class UserController extends Controller
         $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();
         $userAccount->save();
 
+        //set the initial role to employee
+        $userAccount->attachRole('Employee');
+
         return view("employees.show")->with('userAccount', $userAccount);
     }
 
@@ -123,7 +128,6 @@ class UserController extends Controller
     {
         $userAccount = UserAccount::findOrFail($id);
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
-        $userAccount->password = Hash::make($request->input('password'));
         $userAccount->UserAccount_Status = $request->input('UserAccount_Status');
         $userAccount->api_token = str_random(60);
         $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();

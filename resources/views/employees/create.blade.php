@@ -1,4 +1,7 @@
 @extends ('layouts.sidenav')
+
+@section('title', 'Register Employee')
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -285,8 +288,11 @@
 
                             <h2 class="title">Roles:</h2>
                             @foreach ($roles as $role)
-                                <div class="field">
-                                    <input type="checkbox" name="roles[]" value="{{$role->Role_Id}}">{{$role->name}}<br>
+                                <div class="form-check pb-3">
+                                    <input type="checkbox" class="filled-in form-check-input"
+                                           id="checkbox101" name="roles[]"
+                                           value="{{$role->Role_Id}}">
+                                    <label class="form-check-label" for="checkbox101">{{$role->name}}</label>
                                 </div>
                             @endforeach
 
