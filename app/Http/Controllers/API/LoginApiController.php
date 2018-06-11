@@ -21,7 +21,7 @@ class LoginApiController extends Controller
         if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password, 'UserAccount_Status' => 1])){
             $userAccount = Auth::user();
 
-            //refresh token
+            //refresh token every new login
             do{
                 $userAccount->api_token = str_random(60);
             }while(UserAccount::where('api_token', $userAccount->api_token)->exists());

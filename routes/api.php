@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth:api'], function (){
     //User Data API
     Route::get('/userDetails', 'API\UserDataApiController@userDetails');
 
-    //User Data API
+    //User Edit API
     Route::put('/userDetail', 'API\UserDataApiController@update');
 });
 

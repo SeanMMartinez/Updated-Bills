@@ -18,11 +18,11 @@ use Illuminate\Support\Facades\Auth;
 class UserDataApiController extends Controller
 {
     public function userDetails(){
-        if($userAccount = UserAccount::where('UserAccount_Id', Auth::guard('api')->id())->get()){
+        if($userAccount = UserAccount::where('UserAccount_Id', Auth::guard('api')->id())->first()){
 
             $user = User::with('userAccount')->where('User_Id', auth()->user()->User_Id)->first();
 
-            return response()->json($user);
+            return response()->json(['email' => $userAccount->UserAccount_Email, 'data' => $user]);
         }
         else {
             return response()->json(['response' => 'access denied'], 400);
@@ -30,12 +30,19 @@ class UserDataApiController extends Controller
     }
 
     public function update(Request $request){
-        $user = $request->isMethod('put') ? User::findOrFail($request->User_Id) : new User();
+        $this->validate($request,[
+            'UserAccount_Email' => 'unique:useraccounts'
+        ]);
 
+        $user = $request->isMethod('put') ? User::findOrFail($request->User_Id) : new User();
         $user->User_CellphoneNo = $request->input('User_CellphoneNo');
         $user->User_LandlineNo = $request->input('User_LandlineNo');
         $user->save();
 
-        return response()->json($user);
+        $userAccount = UserAccount::where('User_Id', $user->User_Id)->first();
+        $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
+        $userAccount->save();
+
+        return response()->json(['email' => $userAccount->UserAccount_Email, 'data' => $user]);
     }
 }
