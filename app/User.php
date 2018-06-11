@@ -36,6 +36,6 @@ class User extends Authenticatable
     }
 
     public function tenantInfo(){
-        return $this->belongsTo('App\TenantInfo', 'User_Id');
+        return $this->hasOne('App\TenantInfo', 'User_Id');
     }
 }

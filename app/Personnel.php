@@ -6,5 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Personnel extends Model
 {
-    //start with Personnel
+    //disables the timestamp
+    public $timestamps = false;
+
+    //name of the table
+    protected $table = 'personnels';
+
+    //primary key
+    protected $primaryKey = 'Personnel_Id';
+
+    //fields of the table
+    protected $fillable = [
+        'Personnel_Id', 'Personnel_FirstName','Personnel_MiddleName', 'Personnel_LastName', 'Pwork_Id', 'Personnel_ContactNumber',
+        'Personnel_Gender', 'Personnel_DateAdded', 'Personnel_Birthdate', 'Personnel_Status'
+    ];
+
+    public function work(){
+        return $this->belongsTo('App\PersonnelWork', 'Pwork_Id');
+    }
+
 }

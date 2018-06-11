@@ -24,7 +24,6 @@ class AnnouncementApiController extends Controller
         else {
             return response()->json(['response' => 'access denied']);
         }
-
     }
 
     public function show($id)

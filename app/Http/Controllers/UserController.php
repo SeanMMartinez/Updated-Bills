@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Contract;
 use App\Room;
 use App\TenantGuardian;
 use App\TenantInfo;
@@ -62,7 +63,25 @@ class UserController extends Controller
         $user->User_FirstName = $request->input('User_FirstName');
         $user->User_MiddleName = $request->input('User_MiddleName');
         $user->User_LastName = $request->input('User_LastName');
-        $user->User_Picture = $request->input('User_Picture');
+
+        //image upload
+        if($request->hasFile('User_Picture')){
+            //get filename with extension
+            $fileNameWithExt = $request->file('User_Picture')->getClientOriginalName();
+            //get just filename
+            $fileName = pathInfo($fileNameWithExt, PATHINFO_FILENAME);
+            //get just extension
+            $extension = $request->file('User_Picture')->getClientOriginalExtension();
+            //filename to store
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            //upload image
+            $path = $request->file('User_Picture')->storeAs('public/images', $fileNameToStore);
+        }
+        else{
+            $fileNameToStore = 'noimage.jpg';
+        }
+        $user->User_Picture = $fileNameToStore;
+
         $user->User_Nationality = $request->input('User_Nationality');
         $user->User_Birthdate = Carbon::parse($request->input('User_Birthdate'))->format('Y-m-d');
         $user->User_Age = $request->input('User_Age');
@@ -93,6 +112,14 @@ class UserController extends Controller
         $tenantGuardian->TenantGuardian_LandlineNo = $request->input('TenantGuardian_LandlineNo');
         $tenantGuardian->TenantGuardian_Relation = $request->input('TenantGuardian_Relation');
         $tenantGuardian->save();
+
+        //store contract info
+        $contract = new Contract();
+        $contract->Contract_Start = $request->input('Contract_Start');
+        $contract->Contract_Expiry = $request->input('Contract_Expiry');
+        $contract->Contract_Status = $request->input('Contract_Status');
+        $contract->Contract_File = $request->input('Contract_File');
+        $contract->save();
 
         //store to Tenant Info
         $tenantInfo = new TenantInfo();
@@ -153,7 +180,8 @@ class UserController extends Controller
     public function show($id)
     {
         $userAccount = UserAccount::where('UserAccount_Id', $id)->with('roles')->first();
-        return view("users.show")->with('userAccount', $userAccount);
+        $tenantInfo = TenantInfo::where('User_Id', $userAccount->User_Id)->first();
+        return view("users.show")->withTenantInfo($tenantInfo)->with('userAccount', $userAccount);
     }
 
     /**
@@ -174,10 +202,13 @@ class UserController extends Controller
         $addressId = $user->Address_Id;
         $address = Address::where('Address_Id', $addressId)->first();
 
+        //get all the roles
         $roles = Role::all();
 
+        //get all rooms
         $rooms = Room::all();
 
+        //get tenant info id
         $tenantInfo = TenantInfo::where('User_Id', $user->User_Id)->first();
 
         return view("users.edit")->withUserAccount($userAccount)->withAddress($address)->withTenantInfo($tenantInfo)
@@ -204,7 +235,28 @@ class UserController extends Controller
         $user->User_FirstName = $request->input('User_FirstName');
         $user->User_MiddleName = $request->input('User_MiddleName');
         $user->User_LastName = $request->input('User_LastName');
-        $user->User_Picture = $request->input('User_Picture');
+
+        //image upload
+        if($request->hasFile('User_Picture')){
+            //get filename with extension
+            $fileNameWithExt = $request->file('User_Picture')->getClientOriginalName();
+            //get just filename
+            $fileName = pathInfo($fileNameWithExt, PATHINFO_FILENAME);
+            //get just extension
+            $extension = $request->file('User_Picture')->getClientOriginalExtension();
+            //filename to store
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            //upload image
+            $path = $request->file('User_Picture')->storeAs('public/images', $fileNameToStore);
+        }
+        else{
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        if($request->has('User_Picture')){
+            $user->User_Picture = $fileNameToStore;
+        }
+
         $user->User_Nationality = $request->input('User_Nationality');
         $user->User_Birthdate = $request->input('User_Birthdate');
         $user->User_Age = $request->input('User_Age');

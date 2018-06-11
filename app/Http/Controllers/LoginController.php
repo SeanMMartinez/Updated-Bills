@@ -21,12 +21,21 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(Request $request){
-
-        $roles = Role::all();
         //validates email and password
         if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password, 'UserAccount_Status' => 1])) {
-            Auth::user();
+            $userAccount = Auth::user();
+
+            //refresh token
+            do{
+                $userAccount->api_token = str_random(60);
+            }while(UserAccount::where('api_token', $userAccount->api_token)->exists());
+
+            $userAccount->save();
 
             //saves the session
             Session::save();

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Room;
+use App\TenantInfo;
+use App\User;
+use App\UserAccount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
@@ -57,7 +61,9 @@ class RoomController extends Controller
     public function show($id)
     {
         $room = Room::where('TenantRoom_Id', $id)->first();
-        return view('rooms.show')->with('room', $room);
+        $tenantInfos = TenantInfo::all();
+        $user = User::all();
+        return view('rooms.show')->withUser($user)->with('tenantInfos', $tenantInfos)->with('room', $room);
     }
 
     /**

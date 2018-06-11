@@ -10,6 +10,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,11 +21,15 @@ class LoginApiController extends Controller
         if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password, 'UserAccount_Status' => 1])){
             $userAccount = Auth::user();
 
-            //Get the user details
-            $user = User::with('userAccount')->where('User_Id', auth()->user()->User_Id)->first();
+            //refresh token
+            do{
+                $userAccount->api_token = str_random(60);
+            }while(UserAccount::where('api_token', $userAccount->api_token)->exists());
+
+            $userAccount->save();
 
             //Return json
-            return response()->json(['response' => 'Authorized', 'useraccount_id' => $userAccount->UserAccount_Id, 'data' => $user, 'email' => $userAccount->UserAccount_Email,
+            return response()->json(['response' => 'Authorized', 'useraccount_id' => $userAccount->UserAccount_Id, 'email' => $userAccount->UserAccount_Email,
                 'api_token' => $userAccount->api_token], 200);
         }
         else{

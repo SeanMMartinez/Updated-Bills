@@ -56,7 +56,25 @@ class EmployeeController extends Controller
         $user->User_FirstName = $request->input('User_FirstName');
         $user->User_MiddleName = $request->input('User_MiddleName');
         $user->User_LastName = $request->input('User_LastName');
-        $user->User_Picture = $request->input('User_Picture');
+
+        //image upload
+        if($request->hasFile('User_Picture')){
+            //get filename with extension
+            $fileNameWithExt = $request->file('User_Picture')->getClientOriginalName();
+            //get just filename
+            $fileName = pathInfo($fileNameWithExt, PATHINFO_FILENAME);
+            //get just extension
+            $extension = $request->file('User_Picture')->getClientOriginalExtension();
+            //filename to store
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            //upload image
+            $path = $request->file('User_Picture')->storeAs('public/images', $fileNameToStore);
+        }
+        else{
+            $fileNameToStore = 'noimage.jpg';
+        }
+        $user->User_Picture = $fileNameToStore;
+
         $user->User_Nationality = $request->input('User_Nationality');
         $user->User_Birthdate = $request->input('User_Birthdate');
         $user->User_Age = $request->input('User_Age');
@@ -137,7 +155,28 @@ class EmployeeController extends Controller
         $user->User_FirstName = $request->input('User_FirstName');
         $user->User_MiddleName = $request->input('User_MiddleName');
         $user->User_LastName = $request->input('User_LastName');
-        $user->User_Picture = $request->input('User_Picture');
+
+        //image upload
+        if($request->hasFile('User_Picture')){
+            //get filename with extension
+            $fileNameWithExt = $request->file('User_Picture')->getClientOriginalName();
+            //get just filename
+            $fileName = pathInfo($fileNameWithExt, PATHINFO_FILENAME);
+            //get just extension
+            $extension = $request->file('User_Picture')->getClientOriginalExtension();
+            //filename to store
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            //upload image
+            $path = $request->file('User_Picture')->storeAs('public/images', $fileNameToStore);
+        }
+        else{
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        if($request->hasfile('User_Picture')){
+            $user->User_Picture = $fileNameToStore;
+        }
+
         $user->User_Nationality = $request->input('User_Nationality');
         $user->User_Birthdate = $request->input('User_Birthdate');
         $user->User_Age = $request->input('User_Age');

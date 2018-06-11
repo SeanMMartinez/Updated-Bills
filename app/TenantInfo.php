@@ -14,7 +14,7 @@ class TenantInfo extends Model
     protected $primaryKey = 'TenantInfo_Id';
 
     protected $fillable = [
-      'TenantInfo_Id', 'TenantRoom_Id', 'TenantGuardian_Id', 'User_Id'
+      'TenantInfo_Id', 'TenantRoom_Id', 'TenantGuardian_Id', 'Contract_Id', 'User_Id'
     ];
 
     public function tenantGuardian(){
@@ -26,10 +26,10 @@ class TenantInfo extends Model
     }
 
     public function contract(){
-        return $this->hasOne('App\Contract', 'Contract_Id');
+        return $this->hasMany('App\Contract', 'Contract_Id');
     }
 
     public function user(){
-        return $this->hasOne('App\User', 'User_Id');
+        return $this->belongsTo('App\User', 'User_Id');
     }
 }

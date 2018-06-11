@@ -305,9 +305,7 @@
                         <!-- Steps form -->
                         <div class="card">
                             <div class="card-body mx-4">
-                                <h2 class="text-center font-weight-bold pt-4 pb-5"><strong>Registration for
-                                        Tenants</strong></h2>
-                                <hr/>
+                                <h2 class="text-center font-weight-bold pt-4 pb-5"><strong>Edit Tenant Details</strong></h2>
                                 <!-- Stepper -->
                                 <div class="steps-form disabled pb-4">
                                     <div class="steps-row setup-panel">
@@ -329,18 +327,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="progress" style="height: 20px">
-                                    <div class="progress-bar bg-info" role="progressbar" style="height:20px"
-                                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <form role="form-elegant md-form animated fadeIn" action="{{ route('users.update', $userAccount->UserAccount_Id) }}" method="post">
+                                <form role="form-elegant md-form animated fadeIn" action="{{ route('users.update', $userAccount->UserAccount_Id) }}" method="post" enctype="multipart/form-data">
                                 {{method_field('PUT')}}
                                 {{csrf_field()}}
                                 <!-- First Step -->
                                     <fieldset>
                                         <div class="row setup-content" id="step-1">
                                             <div class="col-md-12">
-                                                <h3 class="font-weight-bold pl-0 my-4"><strong>Step 1: Basic
+                                                <h3 class="font-weight-bold pl-0 my-4"><strong>Basic
                                                         Information</strong></h3>
                                                 <div class="row">
                                                     <div class="col-md-3">
@@ -353,7 +347,7 @@
                                                             <div class="d-flex">
                                                                 <div class="btn btn-mdb-color btn-rounded float-left">
                                                                     <span>Add photo</span>
-                                                                    <input type="file" id="uploadBtn">
+                                                                    <input type="file" id="uploadBtn" name="User_Picture">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -502,6 +496,9 @@
                                                                         <option value="" disabled selected>Assign room
                                                                         </option>
                                                                         @foreach($rooms as $room)
+                                                                            @if($room->RoomStatus == 1)
+                                                                                @continue
+                                                                            @endif
                                                                             <option value="{{$room->TenantRoom_Id}}"
                                                                                     @if ($tenantInfo->TenantRoom_Id == $room->TenantRoom_Id) selected='selected' @endif>{{$room->Room}}</option>
                                                                         @endforeach

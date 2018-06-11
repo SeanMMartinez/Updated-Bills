@@ -58,7 +58,7 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Picture') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control{{ $errors->has('User_Picture') ? ' is-invalid' : '' }}" name="User_Picture" value="{{ $userAccount->user->User_Picture }}"  autofocus>
+                                    <input id="upload" type="file" name="User_Picture">
 
                                     @if ($errors->has('User_Picture'))
                                         <span class="invalid-feedback">

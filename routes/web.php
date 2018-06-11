@@ -39,6 +39,7 @@ Route::middleware('role:administrator')->group(function (){
     Route::resource('rooms', 'RoomController');
     //routes for bills
     Route::resource('bills','BillController');
+    Route::resource('personnels','PersonnelController');
 });
 
 //routes for announcement

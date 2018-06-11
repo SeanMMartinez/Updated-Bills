@@ -41,7 +41,7 @@
                                     <div class="progress-bar bg-info" role="progressbar" style="height:20px"
                                          aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <form role="form-elegant md-form animated fadeIn" action="{{ action('UserController@store') }}" method="post">
+                                <form role="form-elegant md-form animated fadeIn" action="{{ action('UserController@store') }}" method="post" enctype="multipart/form-data">
                                 {{csrf_field()}}
                                     <!-- First Step -->
                                     <fieldset>
@@ -60,7 +60,7 @@
                                                             <div class="d-flex">
                                                                 <div class="btn btn-mdb-color btn-rounded float-left">
                                                                     <span>Add photo</span>
-                                                                    <input type="file" id="uploadBtn">
+                                                                    <input type="file" id="uploadBtn" name="User_Picture">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -205,10 +205,37 @@
                                                             <div class="col">
                                                                 <div class="form-group md-form pb-3">
                                                                     <select id="civStat"
+                                                                            class="mdb-select colorful-select dropdown-primary validate" name="Floor">
+                                                                        <option value="" disabled selected>Select Floor
+                                                                        </option>
+                                                                        <option value="1st">1st</option>
+                                                                        <option value="2nd">2nd</option>
+                                                                        <option value="3rd">3rd</option>
+                                                                        <option value="4th">4th</option>
+                                                                        <option value="5th">5th</option>
+                                                                        <option value="6th">6th</option>
+                                                                        <option value="7th">7th</option>
+                                                                        <option value="8th">8th</option>
+                                                                        <option value="9th">9th</option>
+                                                                        <option value="10th">10th</option>
+                                                                        <option value="11th">11th</option>
+                                                                        <option value="12th">12th</option>
+                                                                    </select>
+                                                                    <label for="civStat" data-error="wrong"
+                                                                           data-success="right">Floor</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col">
+                                                                <div class="form-group md-form pb-3">
+                                                                    <select id="civStat"
                                                                             class="mdb-select colorful-select dropdown-primary validate" name="TenantRoom_Id">
                                                                         <option value="" disabled selected>Assign room
                                                                         </option>
                                                                         @foreach($rooms as $room)
+                                                                            @if($room->RoomStatus == 1)
+                                                                                @continue
+                                                                            @endif
                                                                             <option value="{{$room->TenantRoom_Id}}">{{$room->Room}}</option>
                                                                         @endforeach
                                                                     </select>

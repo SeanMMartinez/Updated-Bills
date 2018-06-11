@@ -30,4 +30,11 @@ Route::group(['middleware' => 'auth:api'], function (){
 
     //Bill API
     Route::get('/bills', 'API\BillApiController@bills');
+
+    //User Data API
+    Route::get('/userDetails', 'API\UserDataApiController@userDetails');
+
+    //User Data API
+    Route::put('/userDetail', 'API\UserDataApiController@update');
 });
+
