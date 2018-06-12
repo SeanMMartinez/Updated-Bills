@@ -30,9 +30,6 @@ class UserDataApiController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request,[
-            'UserAccount_Email' => 'unique:useraccounts'
-        ]);
 
         $user = $request->isMethod('put') ? User::findOrFail($request->User_Id) : new User();
         $user->User_CellphoneNo = $request->input('User_CellphoneNo');
@@ -40,6 +37,9 @@ class UserDataApiController extends Controller
         $user->save();
 
         $userAccount = UserAccount::where('User_Id', $user->User_Id)->first();
+        $this->validate($request,[
+            'UserAccount_Email' => 'unique:useraccounts,UserAccount_Email,'.$userAccount->UserAccount_Id.',UserAccount_Id'
+        ]);
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
         $userAccount->save();
 
