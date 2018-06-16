@@ -128,6 +128,7 @@ class UserController extends Controller
         $tenantInfo->TenantRoom_Id = $request->input('TenantRoom_Id');
         $tenantInfo->save();
 
+        //get the tenant count in a room
         $tenantIds = DB::table('tenantinfo')
             ->join('user', 'tenantinfo.User_Id', '=', 'user.User_Id')
             ->join('room', 'room.TenantRoom_Id', '=', 'tenantinfo.TenantRoom_Id')

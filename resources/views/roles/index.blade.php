@@ -1,4 +1,7 @@
-@extends ('layouts.app')
+@extends('layouts.sidenav')
+
+@section('title', 'Roles')
+
 @section('content')
     <main>
         <div class="flex-container">

@@ -26,14 +26,14 @@ class LoginController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function login(Request $request){
+
         //validates email and password
         if(Auth::attempt(['UserAccount_Email' => $request->UserAccount_Email, 'password' => $request->password, 'UserAccount_Status' => 1])) {
             $userAccount = Auth::user();
-
             //refresh token
-            do{
+            do {
                 $userAccount->api_token = str_random(60);
-            }while(UserAccount::where('api_token', $userAccount->api_token)->exists());
+            } while (UserAccount::where('api_token', $userAccount->api_token)->exists());
 
             $userAccount->save();
 

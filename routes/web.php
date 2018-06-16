@@ -24,6 +24,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/announcements', function(){
         return view ('announcements.index');
     })->name('announcements');
+
+    //chat
+    Route::get('chat', 'ChatController@index')->name('chat.index');
+    Route::get('chat/{id}', 'ChatController@show')->name('chat.show');
+    Route::post('chat/getChat/{id}', 'ChatController@getChat');
+    Route::post('chat/sendChat', 'ChatController@sendChat');
 });
 
 //route for logout

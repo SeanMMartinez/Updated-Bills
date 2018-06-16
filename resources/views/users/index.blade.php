@@ -36,7 +36,7 @@
 
                                         <!--Table body-->
                                         <tbody>
-
+                                        @if(count($userAccounts) > 0)
                                         @foreach($userAccounts as $userAccount)
                                             <tr>
                                                 <th scope="row">{{$userAccount->User_Id}}</th>
@@ -51,6 +51,9 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @else
+                                            <p>No records found.</p>
+                                        @endif
                                         </tbody>
                                         <!--Table body-->
 

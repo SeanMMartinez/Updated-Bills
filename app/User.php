@@ -38,4 +38,19 @@ class User extends Authenticatable
     public function tenantInfo(){
         return $this->hasOne('App\TenantInfo', 'User_Id');
     }
+
+    public function message(){
+        return $this->hasMany('App\Message', 'User_Id');
+    }
+
+    //chat
+    public function myConnection(){
+        return $this->belongsToMany('App\User', 'connection', 'User_Id', 'Friend_Id');
+    }
+    public function connectionOf(){
+        return $this->belongsToMany('App\User', 'connection', 'Friend_Id', 'User_Id');
+    }
+    public function connection(){
+        return $this->myConnection->merge($this->connectionOf);
+    }
 }

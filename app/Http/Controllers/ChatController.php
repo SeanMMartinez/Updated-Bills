@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Room;
-use App\TenantInfo;
+use App\Events\ChatEvent;
+use App\Message;
 use App\User;
 use App\UserAccount;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
-class RoomController extends Controller
+class ChatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +19,8 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::orderBy('Floor', 'ASC')->paginate(10);
-        return view('rooms.index')->with('rooms', $rooms);
+        $connections = User::where('User_Id', Auth::user()->User_Id)->first()->connection();
+        return view('chat.index')->with('connections', $connections);
     }
 
     /**
@@ -29,7 +30,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        return view('rooms.create');
+        //
     }
 
     /**
@@ -40,16 +41,7 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        $room = new Room();
 
-        $room->Room = $request->input('Room');
-        $room->Floor = $request->input('Floor');
-        $room->RoomType = $request->input('RoomType');
-        $room->RoomLimit = 0;
-        $room->RoomStatus = 0;
-        $room->save();
-
-        return view("rooms.show")->with('room', $room);
     }
 
     /**
@@ -60,9 +52,8 @@ class RoomController extends Controller
      */
     public function show($id)
     {
-        $room = Room::where('TenantRoom_Id', $id)->first();
-        $tenantInfos = TenantInfo::where('TenantRoom_Id', $room->TenantRoom_Id)->get();
-        return view('rooms.show')->with('tenantInfos', $tenantInfos)->with('room', $room);
+        $friend = User::find($id);
+        return view('chat.show')->withFriend($friend);
     }
 
     /**
@@ -73,8 +64,7 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        $room = Room::where('TenantRoom_Id', $id)->first();
-        return view("rooms.edit")->with('room', $room);
+        //
     }
 
     /**
@@ -86,11 +76,7 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $room = Room::findOrFail($id);
-        $room->RoomType = $request->input('RoomType');
-        $room->RoomLimit = $request->input('RoomLimit');
-        $room->RoomStatus = $request->input('RoomStatus');
-        $room->save();
+        //
     }
 
     /**
@@ -102,5 +88,26 @@ class RoomController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getChat($id){
+        $messages = Message::where(function ($query) use ($id) {
+            $query->where('User_Id', '=', Auth::user()->User_Id)->where('Friend_Id', '=', $id);
+        })->orWhere(function ($query) use ($id){
+            $query->where('User_Id', '=', $id)->where('Friend_Id', '=', Auth::user()->User_Id);
+        })->get();
+
+        return $messages;
+    }
+
+    public function sendChat(Request $request){
+        Message::create([
+            'User_Id' => $request->User_Id,
+            'Friend_Id' => $request->Friend_Id,
+            'Message_Text' => $request->Message_Text,
+            'Message_TimeSent' => Carbon::now('Asia/Manila')
+        ]);
+
+        return [];
     }
 }

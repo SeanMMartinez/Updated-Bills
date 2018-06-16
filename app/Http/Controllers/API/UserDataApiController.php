@@ -14,6 +14,7 @@ use App\User;
 use App\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserDataApiController extends Controller
 {
@@ -37,12 +38,18 @@ class UserDataApiController extends Controller
         $user->save();
 
         $userAccount = UserAccount::where('User_Id', $user->User_Id)->first();
-        $this->validate($request,[
+        $validator = Validator::make($request->all(), [
             'UserAccount_Email' => 'unique:useraccounts,UserAccount_Email,'.$userAccount->UserAccount_Id.',UserAccount_Id'
         ]);
+
+        if($validator->fails()){
+            return response()->json(['response' => 'failed']);
+        }
+
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
         $userAccount->save();
 
-        return response()->json(['email' => $userAccount->UserAccount_Email, 'data' => $user]);
+        return response()->json(['response' => 'success', 'email' => $userAccount->UserAccount_Email, 'data' => $user]);
+
     }
 }

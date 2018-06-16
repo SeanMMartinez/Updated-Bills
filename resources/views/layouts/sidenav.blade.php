@@ -77,7 +77,7 @@
                     </li>
                     <li class="keybutton">
                         <a class="collapsible-header waves-effect arrow-r" href="/chat">
-                            Chat Assistance
+                            Conversation Assistance
                         </a>
                     </li>
                     <li class="keybutton">
@@ -217,12 +217,13 @@
                                 <ul class="sub-menu">
                                     <li><a class="waves-effect" href="{{ route('users.index') }}">Manage Tenants</a></li>
                                     <li><a class="waves-effect" href="{{ route('employees.index') }}">Manage Employee</a></li>
-                                    <li><a class="waves-effect" href="/manage/rooms">Manage Rooms</a></li>
+                                    <li><a class="waves-effect" href="{{ route('rooms.index') }}">Manage Rooms</a></li>
+                                    <li><a class="waves-effect" href="{{ route('roles.index') }}">Manage Roles</a></li>
                                 </ul>
                             </div>
                         </li>
                         <li class="keybutton">
-                            <a class="collapsible-header waves-effect arrow-r">
+                            <a class="collapsible-header waves-effect arrow-r" href="{{ route('bills.index') }}">
                                 Bills
                             </a>
                         </li>
