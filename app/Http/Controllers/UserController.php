@@ -65,7 +65,7 @@ class UserController extends Controller
         $user->User_LastName = $request->input('User_LastName');
 
         //image upload
-        if($request->hasFile('User_Picture')){
+        if ($request->hasFile('User_Picture')) {
             //get filename with extension
             $fileNameWithExt = $request->file('User_Picture')->getClientOriginalName();
             //get just filename
@@ -73,11 +73,10 @@ class UserController extends Controller
             //get just extension
             $extension = $request->file('User_Picture')->getClientOriginalExtension();
             //filename to store
-            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
             //upload image
             $path = $request->file('User_Picture')->storeAs('public/images', $fileNameToStore);
-        }
-        else{
+        } else {
             $fileNameToStore = 'noimage.jpg';
         }
         $user->User_Picture = $fileNameToStore;
@@ -95,7 +94,8 @@ class UserController extends Controller
         //store user account
         $userAccount = new UserAccount();
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
-        $userAccount->password = Hash::make($request->input('password'));
+        $password = str_random(8);
+        $userAccount->password = Hash::make($password);
         $userAccount->UserAccount_Status = 1;
         $userAccount->User_Id = $user->User_Id;
         $userAccount->api_token = str_random(60);
@@ -113,14 +113,6 @@ class UserController extends Controller
         $tenantGuardian->TenantGuardian_Relation = $request->input('TenantGuardian_Relation');
         $tenantGuardian->save();
 
-        //store contract info
-        $contract = new Contract();
-        $contract->Contract_Start = $request->input('Contract_Start');
-        $contract->Contract_Expiry = $request->input('Contract_Expiry');
-        $contract->Contract_Status = $request->input('Contract_Status');
-        $contract->Contract_File = $request->input('Contract_File');
-        $contract->save();
-
         //store to Tenant Info
         $tenantInfo = new TenantInfo();
         $tenantInfo->TenantGuardian_Id = $tenantGuardian->TenantGuardian_Id;
@@ -128,39 +120,43 @@ class UserController extends Controller
         $tenantInfo->TenantRoom_Id = $request->input('TenantRoom_Id');
         $tenantInfo->save();
 
+        //store contract info
+        $contract = new Contract();
+        $contract->TenantInfo_Id = $tenantInfo->TenantInfo_Id;
+        $contract->Contract_Start = $request->input('Contract_Start');
+        $contract->Contract_Expiry = $request->input('Contract_Expiry');
+        $contract->Contract_Status = $request->input('Contract_Status');
+        $contract->Contract_File = $request->input('Contract_File');
+        $contract->save();
+
         //get the tenant count in a room
         $tenantIds = DB::table('tenantinfo')
             ->join('user', 'tenantinfo.User_Id', '=', 'user.User_Id')
             ->join('room', 'room.TenantRoom_Id', '=', 'tenantinfo.TenantRoom_Id')
             ->select('user.User_Id')
-            ->where('room.TenantRoom_Id','=', $tenantInfo->TenantRoom_Id)
+            ->where('room.TenantRoom_Id', '=', $tenantInfo->TenantRoom_Id)
             ->get();
         $tenantCount = count($tenantIds);
 
         $room = Room::where('TenantRoom_Id', $tenantInfo->TenantRoom_Id)->first();
         $room->RoomLimit = $tenantCount;
 
-        if($room->RoomType == 'Double'){
-            if($room->RoomLimit == 2){
+        if ($room->RoomType == 'Double') {
+            if ($room->RoomLimit == 2) {
                 $room->RoomStatus = 1; //if 1 room is full
-            }
-            else if ($room->RoomLimit < 2){
+            } else if ($room->RoomLimit < 2) {
                 $room->RoomStatus = 0; //if 0 room is vacant
             }
-        }
-        else if($room->RoomType == 'Quadruple'){
-            if($room->RoomLimit == 2){
+        } else if ($room->RoomType == 'Quadruple') {
+            if ($room->RoomLimit == 2) {
                 $room->RoomStatus = 1; //if 1 room is full
-            }
-            else if ($room->RoomLimit < 2){
+            } else if ($room->RoomLimit < 2) {
                 $room->RoomStatus = 0; //if 0 room is vacant
             }
-        }
-        else if($room->RoomType == 'Hexatruple'){
-            if($room->RoomLimit == 6){
+        } else if ($room->RoomType == 'Hexatruple') {
+            if ($room->RoomLimit == 6) {
                 $room->RoomStatus = 1; //if 1 room is full
-            }
-            else if ($room->RoomLimit < 6){
+            } else if ($room->RoomLimit < 6) {
                 $room->RoomStatus = 0; //if 0 room is vacant
             }
         }
@@ -169,7 +165,7 @@ class UserController extends Controller
         //set the role to tenant
         $userAccount->attachRole('Tenant');
 
-        return view("users.show")->with('userAccount', $userAccount);
+        return view('users.show')->with('userAccount', $userAccount);
     }
 
     /**
@@ -182,7 +178,8 @@ class UserController extends Controller
     {
         $userAccount = UserAccount::where('UserAccount_Id', $id)->with('roles')->first();
         $tenantInfo = TenantInfo::where('User_Id', $userAccount->User_Id)->first();
-        return view("users.show")->withTenantInfo($tenantInfo)->with('userAccount', $userAccount);
+        $contracts = Contract::where('TenantInfo_Id', $tenantInfo->TenantInfo_Id)->get();
+        return view("users.show")->withTenantInfo($tenantInfo)->with('userAccount', $userAccount)->with('contracts', $contracts);
     }
 
     /**

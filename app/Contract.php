@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
 {
+    //disables the timestamp
+    public $timestamps = false;
+
     protected $table = 'contracts';
 
     protected $primaryKey = 'Contract_Id';

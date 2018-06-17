@@ -36,5 +36,8 @@ Route::group(['middleware' => 'auth:api'], function (){
 
     //User Edit API
     Route::put('/userDetail', 'API\UserDataApiController@update');
+
+    //User Change Password API
+    Route::post('/changePass', 'API\UserDataApiController@changePassword');
 });
 

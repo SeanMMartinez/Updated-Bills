@@ -35,6 +35,10 @@
                                             <a href="#step-4" role="button" class="btn btn-grey btn-circle disabled"
                                                aria-disabled="true">4</a>
                                         </div>
+                                        <div class="steps-step">
+                                            <a href="#step-5" role="button" class="btn btn-grey btn-circle disabled"
+                                               aria-disabled="true">5</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="progress" style="height: 20px">
@@ -383,8 +387,53 @@
                                             </div>
                                         </div>
                                     </fieldset>
+
                                     <fieldset>
                                         <div class="row setup-content" id="step-4">
+                                            <div class="col-md-12">
+                                                <h3 class="font-weight-bold pl-0 my-4"><strong>Step 3: Contract
+                                                        Information</strong></h3>
+                                                <div class="md-form pb-3">
+                                                    <i class="fa fa-at prefix"></i>
+                                                    <input type="date" id="Contract_Start" class="form-control" name="Contract_Start" value="{{ old('Contract_Start') }}">
+                                                    <label for="email">Start</label>
+                                                    <span id="emailAddMsg"></span>
+                                                </div>
+                                                <div class="md-form pb-3">
+                                                    <i class="fa fa-lock prefix"></i>
+                                                    <input type="date" class="form-control" name="Contract_Expiry" value="{{ old('Contract_Expiry') }}">
+                                                    <label for="password">Expiry</label>
+                                                    <span id="password"></span>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="md-form pb-3">
+                                                            <i class="fa fa-mobile-alt prefix"></i>
+                                                            <input type="text" id="phoneno"
+                                                                   class="form-control" name="Contract_Status" value="{{ old('Contract_Status') }}">
+                                                            <label for="phoneno">Status</label>
+                                                            <span id="phoneNoMsg"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="md-form pb-3">
+                                                            <i class="fa fa-phone prefix"></i>
+                                                            <input type="text" id="landno"
+                                                                   class="form-control" name="Contract_File" value="{{ old('Contract_File') }}">
+                                                            <label for="phoneno">File</label>
+                                                            <span id="landNoMsg"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-grey prevBtn float-left" type="button">Previous
+                                                </button>
+                                                <button class="btn btn-indigo nextBtn float-right" type="button">Next
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="row setup-content" id="step-5">
                                             <div class="col-md-12">
                                                 <h3 class="font-weight-bold pl-0 my-4"><strong>Step 4: Terms and
                                                         Conditions</strong></h3>

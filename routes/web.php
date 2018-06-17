@@ -19,6 +19,9 @@ Route::get('/', 'LoginController@showLoginForm');
 //route for login
 Route::post('/login', ['uses' => 'LoginController@login', 'as' => 'login']);
 
+//route for logout
+Route::post('/logout', ['uses' => 'LoginController@logout', 'as' => 'logout']);
+
 //if user is logged in, show homepage
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/announcements', function(){
@@ -26,30 +29,44 @@ Route::group(['middleware' => 'auth'], function(){
     })->name('announcements');
 
     //chat
-    Route::get('chat', 'ChatController@index')->name('chat.index');
-    Route::get('chat/{id}', 'ChatController@show')->name('chat.show');
-    Route::post('chat/getChat/{id}', 'ChatController@getChat');
-    Route::post('chat/sendChat', 'ChatController@sendChat');
+    Route::get('chat', 'MessageController@index')->name('chat.index');
+    Route::get('chat/{id}', 'MessageController@show')->name('chat.show');
+    Route::post('chat/getChat/{id}', 'MessageController@getChat');
+    Route::post('chat/sendChat', 'MessageController@sendChat');
+
+    //profile
+    Route::get('profile', 'ProfileController@index')->name('profile.index');
 });
-
-//route for logout
-Route::post('/logout', ['uses' => 'LoginController@logout', 'as' => 'logout']);
-
 
 
 //only administrator can access
 Route::middleware('role:administrator')->group(function (){
+    //tenants
     Route::resource('users', 'UserController');
+
+    //employees
     Route::resource('employees', 'EmployeeController');
+
+    //roles
     Route::resource('roles', 'RoleController');
+    //rooms
     Route::resource('rooms', 'RoomController');
     //routes for bills
     Route::resource('bills','BillController');
+
+    //personnel
     Route::resource('personnels','PersonnelController');
+
+    //contract
+    Route::resource('contract', 'ContractController');
 });
 
 //routes for announcement
 Route::resource('announcements', 'AnnouncementController');
+
+//Change Password
+Route::get('changePass/','UpdatePasswordController@showChangePassword');
+Route::post('changePass/','UpdatePasswordController@changePassword')->name('changePassword');
 
 
 

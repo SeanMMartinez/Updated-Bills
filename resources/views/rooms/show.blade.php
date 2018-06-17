@@ -29,7 +29,7 @@
                             @foreach($tenantInfos as $tenantInfo)
                                 <ul>
                                     <li>
-                                        {{$tenantInfo->user->User_FirstName.' '.$tenantInfo->user->User_LastName}}</a>
+                                        {{$tenantInfo->user->User_FirstName.' '.$tenantInfo->user->User_LastName}}
                                     </li>
                                 </ul>
                             @endforeach

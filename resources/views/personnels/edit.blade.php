@@ -421,16 +421,25 @@
                                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
 
                                     <div class="col-md-6">
-                                        <input type="checkbox" class="filled-in form-check-input"
-                                               id="checkbox101" name="Personnel_Status" value="1"
-                                               @if($personnel->Personnel_Status == 1) checked="checked" @endif>
-                                        <label class="form-check-label" for="checkbox101">Active</label>
+                                        {{--<input type="checkbox" class="filled-in form-check-input"--}}
+                                               {{--id="checkbox101" name="Personnel_Status" value="1"--}}
+                                               {{--@if($personnel->Personnel_Status == 1) checked="checked" @endif>--}}
+                                        {{--<label class="form-check-label" for="checkbox101">Active</label>--}}
 
-                                        @if ($errors->has('Personnel_Status'))
-                                            <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('Personnel_Status') }}</strong>
-                                    </span>
-                                        @endif
+                                        {{--@if ($errors->has('Personnel_Status'))--}}
+                                            {{--<span class="invalid-feedback">--}}
+                                                {{--<strong>{{ $errors->first('Personnel_Status') }}</strong>--}}
+                                            {{--</span>--}}
+                                        {{--@endif--}}
+                                        <div class="switch round blue-white-switch">
+                                            <label>
+                                                Vacant
+                                                <input type="checkbox" id="checkbox101" name="Personnel_Status" value="1"
+                                                       @if($personnel->Personnel_Status == 1) checked="checked" @endif>
+                                                <span class="lever"></span>
+                                                Active
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
 

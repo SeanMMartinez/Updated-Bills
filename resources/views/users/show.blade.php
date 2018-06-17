@@ -49,6 +49,49 @@
                             <pre>{{$tenantInfo->tenantGuardian->TenantGuardian_FirstName.' '.$tenantInfo->tenantGuardian->TenantGuardian_LastName}}</pre>
                         </div>
                     </div>
+
+                    <!--Contract Table-->
+                    <b>Contract</b>
+                    <div class="column">
+                        <a href="{{ route('contract.create', ['UserAccount_Id' => $userAccount->UserAccount_Id]) }}" class="button is-primary is-pulled-right"><i class="fa fa-clipboard m-r-10"></i> Add Contract</a>
+                    </div>
+                    <table class="table table-hover">
+                        <!--Table head-->
+                        <thead class="blue lighten-3">
+                        <tr>
+                            <th>Start</th>
+                            <th>Expiry</th>
+                            <th>Status</th>
+                            <th>File</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <!--Table head-->
+
+                        <!--Table body-->
+                        <tbody>
+                        @if(count($contracts) > 0)
+                            @foreach($contracts as $contract)
+                                <tr>
+                                    <td>{{$contract->Contract_Start}}</td>
+                                    <td>{{$contract->Contract_Expiry}}</td>
+                                    <td>{{$contract->Contract_Status}}</td>
+                                    <td>{{$contract->Contract_File}}</td>
+                                    <td>
+                                        <a class="fa fa-eye fa-2x blue-text" data-toggle="tooltip"
+                                           data-placement="top" title="View" href="{{ route('contract.show', $contract->Contract_Id ) }}"></a>&nbsp;&nbsp;
+                                        {{--<a class="fa fa-edit fa-2x amber-text" data-toggle="tooltip"--}}
+                                           {{--data-placement="top" title="Edit" href="{{ route('contract.edit', $room->TenantRoom_Id) }}"></a>&nbsp;&nbsp;--}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <p>No records found.</p>
+                        @endif
+                        </tbody>
+                        <!--Table body-->
+
+                    </table>
                 </div>
             </div>
         </div>

@@ -1,17 +1,17 @@
 @extends('layouts.sidenav')
 
-@section('title', 'View Employee Details')
+@section('title', 'Profile')
 
 @section('content')
     <main>
         <div class="flex-container">
             <div class="columns m-t-10">
                 <div class="column">
-                    <h1 class="title">View Employee Details</h1>
+                    <h1 class="title">Profile</h1>
                 </div> <!-- end of column -->
 
                 <div class="column">
-                    <a href="{{route('employees.edit', $userAccount->UserAccount_Id)}}" class="button is-primary is-pulled-right"><i class="fa fa-user m-r-10"></i> Edit User</a>
+                    <a href="{{ action('UpdatePasswordController@showChangePassword') }}" class="button is-primary is-pulled-right"><i class="fa fa-user m-r-10"></i> Change Password</a>
                 </div>
             </div>
             <hr class="m-t-0">
@@ -33,19 +33,6 @@
                         <div class="field">
                             <label for="email" class="label">Email</label>
                             <pre>{{$userAccount->UserAccount_Email}}</pre>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <div class="field">
-                            <label for="email" class="label">Roles</label>
-                            <ul>
-                                @forelse ($userAccount->roles as $role)
-                                    <li>{{$role->name}} ({{$role->Role_Description}})</li>
-                                @empty
-                                    <p>This user has not been assigned any roles yet</p>
-                                @endforelse
-                            </ul>
                         </div>
                     </div>
                 </div>

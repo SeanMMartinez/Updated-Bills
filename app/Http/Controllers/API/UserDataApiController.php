@@ -14,6 +14,7 @@ use App\User;
 use App\UserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserDataApiController extends Controller
@@ -50,6 +51,26 @@ class UserDataApiController extends Controller
         $userAccount->save();
 
         return response()->json(['response' => 'success', 'email' => $userAccount->UserAccount_Email, 'data' => $user]);
+    }
 
+    public function changePassword(Request $request){
+        $userAccount = UserAccount::find(Auth::id());
+        $hashedPassword = $userAccount->password;
+
+        if (!(Hash::check($request->input('oldPassword'), $hashedPassword))) {
+            // The passwords matches
+            return response()->json(['response' => 'not matched']);
+        }
+
+        if(strcmp($request->input('oldPassword'), $request->input('newPassword')) == 0){
+            //Current password and new password are same
+            return response()->json(['response' => 'same password']);
+        }
+
+        //Change Password
+        $userAccount->password = Hash::make($request->get('newPassword'));
+        $userAccount->save();
+
+        return response()->json(['response' => 'success']);
     }
 }

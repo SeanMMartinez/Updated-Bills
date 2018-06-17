@@ -189,6 +189,11 @@
                 <li>
                     <ul class="collapsible collapsible-accordion">
                         <li>
+                            <a class="collapsible-header waves-effect arrow-r" href="{{ route('profile.index') }}">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
                             <a class="collapsible-header waves-effect arrow-r" href="{{ route('announcements.index') }}">
                                 Announcements
                             </a>
@@ -219,6 +224,7 @@
                                     <li><a class="waves-effect" href="{{ route('employees.index') }}">Manage Employee</a></li>
                                     <li><a class="waves-effect" href="{{ route('rooms.index') }}">Manage Rooms</a></li>
                                     <li><a class="waves-effect" href="{{ route('roles.index') }}">Manage Roles</a></li>
+                                    <li><a class="waves-effect" href="{{ route('personnels.index') }}">Manage Personnel</a></li>
                                 </ul>
                             </div>
                         </li>
