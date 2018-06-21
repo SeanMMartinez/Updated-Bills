@@ -49,7 +49,7 @@ class RoomController extends Controller
         $room->RoomStatus = 0;
         $room->save();
 
-        return view("rooms.show")->with('room', $room);
+        return redirect()->route('rooms.index');
     }
 
     /**
@@ -87,10 +87,33 @@ class RoomController extends Controller
     public function update(Request $request, $id)
     {
         $room = Room::findOrFail($id);
+        $room->Room = $request->input('Room');
+        $room->Floor = $request->input('Floor');
         $room->RoomType = $request->input('RoomType');
-        $room->RoomLimit = $request->input('RoomLimit');
-        $room->RoomStatus = $request->input('RoomStatus');
+
+        if ($room->RoomType == 'Double') {
+            if ($room->RoomLimit >= 2) {
+                $room->RoomStatus = 1; //if 1 room is full
+            } else if ($room->RoomLimit < 2) {
+                $room->RoomStatus = 0; //if 0 room is vacant
+            }
+        } else if ($room->RoomType == 'Quadruple') {
+            if ($room->RoomLimit >= 2) {
+                $room->RoomStatus = 1; //if 1 room is full
+            } else if ($room->RoomLimit < 2) {
+                $room->RoomStatus = 0; //if 0 room is vacant
+            }
+        } else if ($room->RoomType == 'Hexatruple') {
+            if ($room->RoomLimit >= 6) {
+                $room->RoomStatus = 1; //if 1 room is full
+            } else if ($room->RoomLimit < 6) {
+                $room->RoomStatus = 0; //if 0 room is vacant
+            }
+        }
+
         $room->save();
+
+        return redirect()->route('rooms.show', $id);
     }
 
     /**

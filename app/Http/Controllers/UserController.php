@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Contract;
+use App\Mail\initialPass;
 use App\Room;
 use App\TenantGuardian;
 use App\TenantInfo;
 use App\UserAccount;
 use App\User;
 use App\Role;
+use App\Violation;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -24,7 +28,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if($userAccounts = UserAccount::orderBy('UserAccount_Id')->whereRoleIs('Tenant')->get()){
+        if($userAccounts = UserAccount::orderBy('UserAccount_Id')->whereRoleIs('Tenant')->get()) {
             return view('users.index')->with('userAccounts', $userAccounts);
         }
     }
@@ -95,11 +99,12 @@ class UserController extends Controller
         $userAccount = new UserAccount();
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
         $password = str_random(8);
-        $userAccount->password = Hash::make($password);
+        $userAccount->UserAccount_Password = Hash::make($password);
         $userAccount->UserAccount_Status = 1;
         $userAccount->User_Id = $user->User_Id;
         $userAccount->api_token = str_random(60);
-        $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();
+        $userAccount->UserAccount_DateCreated = Carbon::now('Asia/Manila')->toDateTimeString();
+        $userAccount->Password_Changed = 0;
         $userAccount->save();
 
         //store guardian info
@@ -162,10 +167,24 @@ class UserController extends Controller
         }
         $room->save();
 
+        //get the registered user id
+        $thisUser = UserAccount::findOrFail($userAccount->UserAccount_Id);
+        $this->sendEmail($thisUser, $password);
+
         //set the role to tenant
         $userAccount->attachRole('Tenant');
 
         return view('users.show')->with('userAccount', $userAccount);
+    }
+
+    //send initial password to email
+    public function sendEmail($thisUser, $password){
+        $data = array('email' => $thisUser->UserAccount_Email, 'password' => $password);
+
+        Mail::send('email.sendPass', ['data' => $data], function ($message) use ($data) {
+            $message->from('dormpanion@gmail.com', 'DormPanion');
+            $message->to($data['email'])->subject('DormPanion Initial Password');
+        });
     }
 
     /**
@@ -179,7 +198,8 @@ class UserController extends Controller
         $userAccount = UserAccount::where('UserAccount_Id', $id)->with('roles')->first();
         $tenantInfo = TenantInfo::where('User_Id', $userAccount->User_Id)->first();
         $contracts = Contract::where('TenantInfo_Id', $tenantInfo->TenantInfo_Id)->get();
-        return view("users.show")->withTenantInfo($tenantInfo)->with('userAccount', $userAccount)->with('contracts', $contracts);
+        $violations = Violation::where('Records_Owner', $userAccount->User_Id)->get();
+        return view("users.show")->withTenantInfo($tenantInfo)->with('userAccount', $userAccount)->with('contracts', $contracts)->with('violations', $violations);
     }
 
     /**
@@ -226,7 +246,6 @@ class UserController extends Controller
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
         $userAccount->UserAccount_Status = $request->input('UserAccount_Status');
         $userAccount->api_token = str_random(60);
-        $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();
         $userAccount->save();
 
         $user = User::where('User_Id', $userAccount->User_Id)->first();
@@ -299,7 +318,7 @@ class UserController extends Controller
         $room->RoomLimit = --$tenantCount1;
         if($room->RoomType == 'Double'){
             if($room->RoomLimit == 2){
-                $room->RoomStatus = 1; //if 1 room is full
+                $room->RoomStatus = 1;//if 1 room is full
             }
             else if ($room->RoomLimit <= 1){
                 $room->RoomStatus = 0; //if 0 room is vacant
@@ -307,7 +326,7 @@ class UserController extends Controller
         }
         else if($room->RoomType == 'Quadruple'){
             if($room->RoomLimit == 4){
-                $room->RoomStatus = 1; //if 1 room is full
+                $room->RoomStatus = 1;//if 1 room is full
             }
             else if ($room->RoomLimit <= 3){
                 $room->RoomStatus = 0; //if 0 room is vacant
@@ -315,7 +334,7 @@ class UserController extends Controller
         }
         else if($room->RoomType == 'Hexatruple'){
             if($room->RoomLimit == 6){
-                $room->RoomStatus = 1; //if 1 room is full
+                $room->RoomStatus = 1;//if 1 room is full
             }
             else if ($room->RoomLimit <= 5){
                 $room->RoomStatus = 0; //if 0 room is vacant

@@ -69,7 +69,7 @@ class BillController extends Controller
 
             //Divide the total bill to the number of tenants
             $bill->Bill_Total = $BillTotal / $tenantCount;
-            $bill->Bill_DateTime_Created = Carbon::now()->toDateTimeString();
+            $bill->Bill_DateTime_Created = Carbon::now('Asia/Manila')->toDateTimeString();
             $bill->Bill_DueDate = $request->input('Bill_DueDate');
             $bill->Bill_Status = $request->input('Bill_Status');
             $bill->save();

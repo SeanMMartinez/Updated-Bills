@@ -40,8 +40,14 @@ class LoginController extends Controller
             //saves the session
             Session::save();
 
-            //redirect to page
-            return redirect()->route('announcements.index');
+            if($userAccount->Password_Changed == 0){
+                //redirect to change password
+                return redirect()->action('UpdatePasswordController@showChangePassword');
+            }
+            else if ($userAccount->Password_Changed == 1){
+                //redirect to page
+                return redirect()->route('announcements.index');
+            }
         }
         else {
             //redirect back to login page

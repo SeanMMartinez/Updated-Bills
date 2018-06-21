@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Contract;
-use App\TenantInfo;
 use App\User;
 use App\UserAccount;
+use App\Violation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ContractController extends Controller
+class ViolationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,8 +30,7 @@ class ContractController extends Controller
     {
         $userAccount = UserAccount::where('UserAccount_Id', $request->UserAccount_Id)->first();
         $user = User::where('User_Id', $userAccount->User_Id)->first();
-        $tenantInfo = TenantInfo::where('User_Id', $user->User_Id)->first();
-        return view('contract.create')->withTenantInfo($tenantInfo);
+        return view('violations.create')->withUser($user);
     }
 
     /**
@@ -42,19 +41,18 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        $tenantInfo = $request->get('TenantInfo_Id');
-        $tenant = TenantInfo::where('TenantInfo_Id', $tenantInfo)->first();
-        $userAccount = UserAccount::where('User_Id', $tenant->User_Id)->first();
+        $user = $request->get('User_Id');
 
         //store contract info
-        $contract = new Contract();
-        $contract->TenantInfo_Id = $tenantInfo;
-        $contract->Contract_Start = $request->input('Contract_Start');
-        $contract->Contract_Expiry = $request->input('Contract_Expiry');
-        $contract->Contract_Status = $request->input('Contract_Status');
-        $contract->Contract_File = $request->input('Contract_File');
-        $contract->save();
+        $violation = new Violation();
+        $violation->Records_CreatedBy = Auth::user()->id;
+        $violation->Records_Owner = $user;
+        $violation->Records_Title = $request->input('Records_Title');
+        $violation->Records_Text = $request->input('Records_Text');
+        $violation->Records_DateTime_Added = Carbon::now('Asia/Manila')->toDateTimeString();
+        $violation->save();
 
+        $userAccount = UserAccount::where('User_Id', $user)->first();
         return redirect()->route('users.show', $userAccount->UserAccount_Id);
     }
 
@@ -66,8 +64,7 @@ class ContractController extends Controller
      */
     public function show($id)
     {
-        $contract = Contract::where('Contract_Id', $id)->first();
-        return view('contract.show')->withContract($contract);
+        //
     }
 
     /**
@@ -78,8 +75,7 @@ class ContractController extends Controller
      */
     public function edit($id)
     {
-        $contract = Contract::where('Contract_Id', $id)->first();
-        return view('contract.edit')->withContract($contract);
+        //
     }
 
     /**

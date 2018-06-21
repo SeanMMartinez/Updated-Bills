@@ -49,7 +49,7 @@ class PersonnelController extends Controller
         $personnel->Personnel_Gender = $request->input('Personnel_Gender');
         $personnel->Personnel_Birthdate = $request->input('Personnel_Birthdate');
         $personnel->Personnel_Status = $request->input('Personnel_Status');
-        $personnel->Personnel_DateAdded = Carbon::now()->toDateTimeString();
+        $personnel->Personnel_DateAdded = Carbon::now('Asia/Manila')->toDateTimeString();
         $personnel->save();
 
         return redirect()->route('personnels.index');
@@ -98,7 +98,6 @@ class PersonnelController extends Controller
         $personnel->Personnel_Gender = $request->input('Personnel_Gender');
         $personnel->Personnel_Birthdate = $request->input('Personnel_Birthdate');
         $personnel->Personnel_Status = $request->input('Personnel_Status');
-        $personnel->Personnel_DateAdded = Carbon::now()->toDateTimeString();
         $personnel->save();
 
         return redirect()->route('personnels.index');

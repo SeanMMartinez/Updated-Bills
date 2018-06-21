@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    //this profile is for the user for web application
     /**
      * Display a listing of the resource.
      *

@@ -390,7 +390,7 @@
                                                                 <div class="form-group md-form pb-3">
                                                                     <select id="gender"
                                                                             class="mdb-select colorful-select dropdown-primary validate" name="User_Gender" value="{{ $userAccount->user->User_Gender }}">
-                                                                        <option value="" disabled selected>Choose your gender</option>
+                                                                        <option value="" disabled>Choose your gender</option>
                                                                         <option value="Male">Male</option>
                                                                         <option value="Female">Female</option>
                                                                     </select>
@@ -402,7 +402,7 @@
                                                                 <div class="form-group md-form pb-3">
                                                                     <select id="civStat"
                                                                             class="mdb-select colorful-select dropdown-primary validate" name="User_CivilStatus" value="{{ $userAccount->user->User_CivilStatus }}">
-                                                                        <option value="" disabled selected>Choose your civil status
+                                                                        <option value="" disabled>Choose your civil status
                                                                         </option>
                                                                         <option value="Single">Single</option>
                                                                         <option value="Married">Married</option>
@@ -493,14 +493,11 @@
                                                                 <div class="form-group md-form pb-3">
                                                                     <select id="civStat"
                                                                             class="mdb-select colorful-select dropdown-primary validate" name="TenantRoom_Id">
-                                                                        <option value="" disabled selected>Assign room
+                                                                        <option value="" disabled>Assign room
                                                                         </option>
                                                                         @foreach($rooms as $room)
-                                                                            @if($room->RoomStatus == 1)
-                                                                                @continue
-                                                                            @endif
                                                                             <option value="{{$room->TenantRoom_Id}}"
-                                                                                    @if ($tenantInfo->TenantRoom_Id == $room->TenantRoom_Id) selected='selected' @endif>{{$room->Room}}</option>
+                                                                                    @if ($tenantInfo->TenantRoom_Id === $room->TenantRoom_Id) selected='selected' @endif>{{$room->Room}}</option>
                                                                         @endforeach
                                                                     </select>
                                                                     <label for="civStat" data-error="wrong"
@@ -528,7 +525,7 @@
                                                     <div class="form-group md-form">
                                                         <select id="relateStat"
                                                                 class="mdb-select colorful-select dropdown-primary validate" name="TenantGuardian_Relation" selected="selected">
-                                                            <option value="" disabled selected>Choose the relation
+                                                            <option value="" disabled>Choose the relation
                                                             </option>
                                                             <option value="Mother">Mother</option>
                                                             <option value="Father">Father</option>

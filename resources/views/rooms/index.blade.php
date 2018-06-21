@@ -43,9 +43,9 @@
                                                 <td>{{$room->RoomLimit}}</td>
 
                                                 @if($room->RoomStatus == 1)
-                                                    <td>Full</td>
+                                                    <td style="color: red;"><b>Full</b></td>
                                                 @elseif($room->RoomStatus == 0)
-                                                    <td>Vacant</td>
+                                                    <td style="color: green;"><b>Vacant</b></td>
                                                 @endif
                                                 <td>
                                                     <a class="fa fa-eye fa-2x blue-text" data-toggle="tooltip"

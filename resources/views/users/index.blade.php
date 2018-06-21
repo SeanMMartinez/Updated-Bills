@@ -29,6 +29,8 @@
                                             <th>Email Address</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
+                                            <th>Room</th>
+                                            <th>Account Status</th>
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
@@ -43,6 +45,12 @@
                                                 <td>{{$userAccount->UserAccount_Email}}</td>
                                                 <td>{{$userAccount->user->User_FirstName}}</td>
                                                 <td>{{$userAccount->user->User_LastName}}</td>
+                                                <td>{{$userAccount->user->tenantInfo->room->Room}}</td>
+                                                @if($userAccount->UserAccount_Status == 1)
+                                                    <td>Active</td>
+                                                @elseif($userAccount->UserAccount_Status == 1)
+                                                    <td>Inactive</td>
+                                                @endif
                                                 <td>
                                                     <a class="fa fa-eye fa-2x blue-text" data-toggle="tooltip"
                                                        data-placement="top" title="View" href="{{ route('users.show', $userAccount->UserAccount_Id) }}"></a>&nbsp;&nbsp;

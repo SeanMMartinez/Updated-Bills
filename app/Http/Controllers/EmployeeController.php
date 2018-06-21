@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class EmployeeController extends Controller
 {
@@ -87,17 +88,33 @@ class EmployeeController extends Controller
 
         $userAccount = new UserAccount();
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
-        $userAccount->password = Hash::make($request->input('password'));
+        $password = str_random(8);
+        $userAccount->UserAccount_Password = Hash::make($password);
         $userAccount->UserAccount_Status = 1;
         $userAccount->User_Id = $user->User_Id;
         $userAccount->api_token = str_random(60);
-        $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();
+        $userAccount->UserAccount_DateCreated = Carbon::now('Asia/Manila')->toDateTimeString();
+        $userAccount->Password_Changed = 0;
         $userAccount->save();
+
+        //get the registered user id
+        $thisUser = UserAccount::findOrFail($userAccount->UserAccount_Id);
+        $this->sendEmail($thisUser, $password);
 
         //set the initial role to employee
         $userAccount->attachRole('Employee');
 
         return view("employees.show")->with('userAccount', $userAccount);
+    }
+
+    //send initial password to email
+    public function sendEmail($thisUser, $password){
+        $data = array('email' => $thisUser->UserAccount_Email, 'password' => $password);
+
+        Mail::send('email.sendPass', ['data' => $data], function ($message) use ($data) {
+            $message->from('dormpanion@gmail.com', 'DormPanion');
+            $message->to($data['email'])->subject('DormPanion Initial Password');
+        });
     }
 
     /**
@@ -148,7 +165,6 @@ class EmployeeController extends Controller
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
         $userAccount->UserAccount_Status = $request->input('UserAccount_Status');
         $userAccount->api_token = str_random(60);
-        $userAccount->UserAccount_DateCreated = Carbon::now()->toDateTimeString();
         $userAccount->save();
 
         $user = User::findOrFail($userAccount->User_Id);

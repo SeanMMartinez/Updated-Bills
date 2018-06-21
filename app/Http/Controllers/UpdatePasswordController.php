@@ -21,7 +21,7 @@ class UpdatePasswordController extends Controller
     public function changePassword(Request $request){
 
         $userAccount = UserAccount::find(Auth::id());
-        $hashedPassword = $userAccount->password;
+        $hashedPassword = $userAccount->UserAccount_Password;
 
         if (!(Hash::check($request->get('oldPassword'), $hashedPassword))) {
             // The passwords matches
@@ -34,7 +34,8 @@ class UpdatePasswordController extends Controller
         }
 
         //Change Password
-        $userAccount->password = Hash::make($request->get('newPassword'));
+        $userAccount->UserAccount_Password = Hash::make($request->get('newPassword'));
+        $userAccount->Password_Changed = 1;
         $userAccount->save();
 
         return redirect()->back()->with("success","Password changed successfully !");;

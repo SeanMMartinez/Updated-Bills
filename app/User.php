@@ -32,7 +32,7 @@ class User extends Authenticatable
     }
 
     public function address(){
-        return $this->hasOne('App\Address', 'Address_Id');
+        return $this->belongsTo('App\Address', 'Address_Id');
     }
 
     public function tenantInfo(){
@@ -42,8 +42,12 @@ class User extends Authenticatable
     public function message(){
         return $this->hasMany('App\Message', 'User_Id');
     }
+    public function tenantRecord(){
+        return $this->hasMany('App\Violation', 'User_Id');
+    }
 
-    //chat
+
+    //connection of two users
     public function myConnection(){
         return $this->belongsToMany('App\User', 'connection', 'User_Id', 'Friend_Id');
     }

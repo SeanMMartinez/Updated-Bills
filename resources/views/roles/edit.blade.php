@@ -25,8 +25,9 @@
                                 <h2 class="title">Permissions:</h2>
                                 @foreach ($permissions as $permission)
                                     <div class="field">
-                                        <input type="checkbox" name="permissions[]" value="{{$permission->Permission_Id}}"
-                                               @if ($role->permissions->contains($permission->Permission_Id)) checked='checked' @endif>{{$permission->Permission_Name}}<br>
+                                        <input type="checkbox" name="permissions[]" id="{{$permission->Permission_Name}}" value="{{$permission->Permission_Id}}"
+                                               @if ($role->permissions->contains($permission->Permission_Id)) checked='checked' @endif>
+                                        <label class="form-check-label" for="{{$permission->Permission_Name}}">{{$permission->Permission_Name}}</label>
                                     </div>
                                 @endforeach
                                 <button class="button is-primary">Save Changes to Role</button>
