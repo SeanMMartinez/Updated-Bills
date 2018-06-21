@@ -354,12 +354,6 @@
                                                     <label for="email">Email Address</label>
                                                     <span id="emailAddMsg"></span>
                                                 </div>
-                                                <div class="md-form pb-3">
-                                                    <i class="fa fa-lock prefix"></i>
-                                                    <input type="password" class="form-control" name="password" value="{{ old('password') }}">
-                                                    <label for="password">Password</label>
-                                                    <span id="password"></span>
-                                                </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="md-form pb-3">

@@ -14,7 +14,6 @@ class ConversationController extends Controller
      */
     public function index()
     {
-
     }
 
     /**

@@ -253,8 +253,16 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
 
                                 <div class="col-md-6">
-                                    {{--<input id="name" type="number" class="form-control{{ $errors->has('UserAccount_Status') ? ' is-invalid' : '' }}" name="UserAccount_Status" value="{{ $userAccount->UserAccount_Status }}"  autofocus>--}}
-                                    <input type="checkbox" name="UserAccount_Status" value="{{ $userAccount->UserAccount_Status }}" @if ($userAccount->UserAccount_Status == 1) checked='checked' @endif > Active<br>
+                                    <div class="switch round blue-white-switch">
+                                        <label>
+                                            Inactive
+                                            <input type="hidden" id="checkbox101" name="UserAccount_Status" value="0">
+                                            <input type="checkbox" id="checkbox101" name="UserAccount_Status" value="1"
+                                                   @if($userAccount->UserAccount_Status == 1) checked="checked" @endif>
+                                            <span class="lever"></span>
+                                            Active
+                                        </label>
+                                    </div>
                                     @if ($errors->has('UserAccount_Status'))
                                         <span class="invalid-feedback">
                                         <strong>{{ $errors->first('UserAccount_Status') }}</strong>
@@ -266,11 +274,10 @@
                             <h2 class="title">Roles:</h2>
                             @foreach ($roles as $role)
                                 <div class="form-check pb-3">
-                                    <input type="checkbox" class="filled-in form-check-input"
-                                           id="checkbox101" name="roles[]"
+                                    <input type="checkbox" class="filled-in form-check-input" id="{{$role->name}}" name="roles[]"
                                            value="{{$role->Role_Id}}"
                                            @if ($userAccount->roles->contains($role->Role_Id)) checked='checked' @endif>
-                                    <label class="form-check-label" for="checkbox101">{{$role->name}}</label>
+                                    <label class="form-check-label" for="{{$role->name}}">{{$role->name}}</label>
                                 </div>
                             @endforeach
 

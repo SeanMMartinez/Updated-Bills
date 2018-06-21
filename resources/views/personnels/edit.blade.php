@@ -356,7 +356,7 @@
 
                                     <div class="col-md-6">
                                         <select class="mdb-select" name="Pwork_Id" id="Pwork_Id">
-                                            <option value="" disabled selected>Select Work</option>
+                                            <option value="" disabled>Select Work</option>
                                             @foreach($works as $work)
                                                 <option value="{{ $work->Pwork_Id }}"
                                                         @if ($personnel->Pwork_Id == $work->Pwork_Id) selected='selected' @endif>{{ $work->Pwork_Name }}</option>
@@ -390,7 +390,7 @@
 
                                     <div class="col-md-6">
                                         <select class="mdb-select" name="Personnel_Gender" id="Personnel_Gender">
-                                            <option value="" disabled selected>Select Gender</option>
+                                            <option value="" disabled>Select Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
@@ -434,6 +434,7 @@
                                         <div class="switch round blue-white-switch">
                                             <label>
                                                 Vacant
+                                                <input type="hidden" id="checkbox101" name="Personnel_Status" value="0">
                                                 <input type="checkbox" id="checkbox101" name="Personnel_Status" value="1"
                                                        @if($personnel->Personnel_Status == 1) checked="checked" @endif>
                                                 <span class="lever"></span>

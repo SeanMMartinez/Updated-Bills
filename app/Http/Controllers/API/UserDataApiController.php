@@ -55,7 +55,7 @@ class UserDataApiController extends Controller
 
     public function changePassword(Request $request){
         $userAccount = UserAccount::find(Auth::id());
-        $hashedPassword = $userAccount->password;
+        $hashedPassword = $userAccount->UserAccount_Password;
 
         if (!(Hash::check($request->input('oldPassword'), $hashedPassword))) {
             // The passwords matches
@@ -68,7 +68,7 @@ class UserDataApiController extends Controller
         }
 
         //Change Password
-        $userAccount->password = Hash::make($request->get('newPassword'));
+        $userAccount->UserAccount_Password = Hash::make($request->get('newPassword'));
         $userAccount->save();
 
         return response()->json(['response' => 'success']);

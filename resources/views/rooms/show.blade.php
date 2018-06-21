@@ -24,6 +24,11 @@
                     </div>
 
                     <div class="field">
+                        <label for="name" class="label">Room Type</label>
+                        <pre>{{$room->RoomType}}</pre>
+                    </div>
+
+                    <div class="field">
                         <label for="name" class="label">Tenants</label>
                         @if(count($tenantInfos) > 0)
                             @foreach($tenantInfos as $tenantInfo)

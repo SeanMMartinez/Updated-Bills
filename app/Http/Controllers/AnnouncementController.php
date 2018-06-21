@@ -48,10 +48,10 @@ class AnnouncementController extends Controller
         $announcement->Announcement_Title = $request->input('Announcement_Title');
         $announcement->User_Id = auth()->user()->User_Id;
         $announcement->Announcement_Text = $request->input('Announcement_Text');
-        $announcement->Announcement_DateTime_Created = Carbon::now()->toDateTimeString();
+        $announcement->Announcement_DateTime_Created = Carbon::now('Asia/Manila')->toDateTimeString();
         $announcement->save();
 
-        return redirect('/announcements')->with('success', 'Post Created');
+        return redirect('announcements')->with('success', 'Post Created');
 
     }
 

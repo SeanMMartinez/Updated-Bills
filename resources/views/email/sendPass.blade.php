@@ -1,0 +1,1 @@
+Here is your intial password: {{ $data['password'] }}.

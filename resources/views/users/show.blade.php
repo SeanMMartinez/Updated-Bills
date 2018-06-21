@@ -73,8 +73,8 @@
                         @if(count($contracts) > 0)
                             @foreach($contracts as $contract)
                                 <tr>
-                                    <td>{{$contract->Contract_Start}}</td>
-                                    <td>{{$contract->Contract_Expiry}}</td>
+                                    <td>{{date('F d, Y', strtotime($contract->Contract_Start))}}</td>
+                                    <td>{{date('F d, Y', strtotime($contract->Contract_Expiry))}}</td>
                                     <td>{{$contract->Contract_Status}}</td>
                                     <td>{{$contract->Contract_File}}</td>
                                     <td>
@@ -82,6 +82,47 @@
                                            data-placement="top" title="View" href="{{ route('contract.show', $contract->Contract_Id ) }}"></a>&nbsp;&nbsp;
                                         {{--<a class="fa fa-edit fa-2x amber-text" data-toggle="tooltip"--}}
                                            {{--data-placement="top" title="Edit" href="{{ route('contract.edit', $room->TenantRoom_Id) }}"></a>&nbsp;&nbsp;--}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <p>No records found.</p>
+                        @endif
+                        </tbody>
+                        <!--Table body-->
+
+                    </table>
+
+                    <!--Violations Table-->
+                    <b>Violations</b>
+                    <div class="column">
+                        <a href="{{ route('violations.create', ['UserAccount_Id' => $userAccount->UserAccount_Id]) }}" class="button is-primary is-pulled-right"><i class="fa fa-clipboard m-r-10"></i> Add Contract</a>
+                    </div>
+                    <table class="table table-hover">
+                        <!--Table head-->
+                        <thead class="blue lighten-3">
+                        <tr>
+                            <th>Title</th>
+                            <th>Text</th>
+                            <th>Date Created</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <!--Table head-->
+
+                        <!--Table body-->
+                        <tbody>
+                        @if(count($violations) > 0)
+                            @foreach($violations as $violation)
+                                <tr>
+                                    <td>{{$violation->Records_Title}}</td>
+                                    <td>{{$violation->Records_Text}}</td>
+                                    <td>{{date('F d, Y', strtotime($violation->Records_DateTime_Added))}}</td>
+                                    <td>
+                                        {{--<a class="fa fa-eye fa-2x blue-text" data-toggle="tooltip"--}}
+                                           {{--data-placement="top" title="View" href="{{ route('violations.show', $violation->Contract_Id ) }}"></a>&nbsp;&nbsp;--}}
+                                        {{--<a class="fa fa-edit fa-2x amber-text" data-toggle="tooltip"--}}
+                                        {{--data-placement="top" title="Edit" href="{{ route('contract.edit', $room->TenantRoom_Id) }}"></a>&nbsp;&nbsp;--}}
                                     </td>
                                 </tr>
                             @endforeach

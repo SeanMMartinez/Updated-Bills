@@ -41,9 +41,6 @@ Route::group(['middleware' => 'auth'], function(){
 
 //only administrator can access
 Route::middleware('role:administrator')->group(function (){
-    //tenants
-    Route::resource('users', 'UserController');
-
     //employees
     Route::resource('employees', 'EmployeeController');
 
@@ -59,14 +56,20 @@ Route::middleware('role:administrator')->group(function (){
 
     //contract
     Route::resource('contract', 'ContractController');
+
+    //violation
+    Route::resource('violations', 'ViolationController');
 });
+
+//tenants
+Route::resource('users', 'UserController');
 
 //routes for announcement
 Route::resource('announcements', 'AnnouncementController');
 
 //Change Password
-Route::get('changePass/','UpdatePasswordController@showChangePassword');
-Route::post('changePass/','UpdatePasswordController@changePassword')->name('changePassword');
+Route::get('changePass','UpdatePasswordController@showChangePassword');
+Route::post('changePass','UpdatePasswordController@changePassword')->name('changePassword');
 
 
 

@@ -42,7 +42,7 @@ class RoleController extends Controller
         $role = new Role();
         $role->name = $request->input('name');
         $role->Role_Description = $request->input('Role_Description');
-        $role->Role_DateCreated = Carbon::now()->toDateTimeString();
+        $role->Role_DateCreated = Carbon::now('Asia/Manila')->toDateTimeString();
         $role->save();
 
         if ($request->permissions) {
@@ -89,7 +89,6 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->name = $request->input('name');
         $role->Role_Description = $request->input('Role_Description');
-        $role->Role_DateCreated = Carbon::now()->toDateTimeString();
         $role->save();
 
         if ($request->permissions) {
