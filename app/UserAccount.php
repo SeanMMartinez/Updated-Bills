@@ -28,4 +28,9 @@ class UserAccount extends Authenticatable
     public function user(){
         return $this->belongsTo("App\User", "User_Id");
     }
+
+//change the default password field name
+    public function getAuthPassword() {
+        return $this->UserAccount_Password;
+    }
 }

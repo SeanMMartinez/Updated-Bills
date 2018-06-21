@@ -95,7 +95,7 @@ class UserController extends Controller
         $userAccount = new UserAccount();
         $userAccount->UserAccount_Email = $request->input('UserAccount_Email');
         $password = str_random(8);
-        $userAccount->password = Hash::make($password);
+        $userAccount->UserAccount_Password = Hash::make($password);
         $userAccount->UserAccount_Status = 1;
         $userAccount->User_Id = $user->User_Id;
         $userAccount->api_token = str_random(60);
