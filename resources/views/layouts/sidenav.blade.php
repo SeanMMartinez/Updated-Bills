@@ -228,10 +228,17 @@
                                 </ul>
                             </div>
                         </li>
+
                         <li class="keybutton">
-                            <a class="collapsible-header waves-effect arrow-r" href="{{ route('bills.index') }}">
-                                Bills
+                            <a class="collapsible-header waves-effect arrow-r">
+                                Bills<i class="fa fa-angle-down rotate-icon"></i>
                             </a>
+                            <div class="collapsible-body">
+                                <ul class="sub-menu">
+                                    <li><a class="waves-effect" href="{{ route('bills.index') }}">View Bills</a></li>
+                                    <li><a class="waves-effect" href="{{ route('bills.create') }}">Create Bills</a></li>
+                                </ul>
+                            </div>
                         </li>
                         <li class="keybutton">
                             <a class="collapsible-header waves-effect arrow-r">
